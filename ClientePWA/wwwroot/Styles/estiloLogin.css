@@ -1,0 +1,29 @@
+﻿html, body {
+    background-color: #E8E5C9;
+    font-family: Verdana;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+header h1 {
+    text-align: center;
+    padding-top: 10px;
+    color: #1BAB6F;
+}
+main {
+    margin:auto;
+    padding-top:100px;
+}
+main label{
+    font-size:large;
+    width:120px;
+    align-self:center;
+    display:inline-block;
+}
+main input{
+    width:250px;
+}
+main a {
+        background-color: #1BAB6F;
+}

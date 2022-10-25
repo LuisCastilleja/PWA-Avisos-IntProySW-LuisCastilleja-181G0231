@@ -6,4 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Teachers\" />
+    <Folder Include="Pages\Students\" />
+    <Folder Include="wwwroot\Scripts\" />
+  </ItemGroup>
+
 </Project>
