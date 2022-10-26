@@ -1,0 +1,56 @@
+﻿html, body {
+    background-color: #E8E5C9;
+    font-family: 'Century Gothic';
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+header h1 {
+    text-align: center;
+    padding-top: 10px;
+    color: #1BAB6F;
+}
+.listDiv{
+    margin:10px;
+    border-color: #1BAB6F;
+    border-width: 2px;
+    border-style: inset;
+    overflow-y: scroll;
+    height:400px;
+    overflow-x:hidden;
+}
+
+main div div {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    margin-top: 1px;
+    margin-left: 3px;
+    margin-right: 2px;
+    border-bottom:1px medium black;
+}
+main div div a{
+    display:inline-block;
+    font-size:large;
+    color:black;
+    text-decoration:none;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+main h5{
+    margin:10px;
+}
+main input[type=button] {
+    margin-left:10px;
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #1BAB6F;
+    height: 35px;
+    width: 190px;
+    font-size: medium;
+    color: white;
+    padding-bottom: 3px;
+    text-align: center;
+    border:0px;
+}
