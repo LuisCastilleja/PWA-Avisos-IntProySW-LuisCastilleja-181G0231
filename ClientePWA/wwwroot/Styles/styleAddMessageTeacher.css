@@ -1,0 +1,61 @@
+﻿html, body {
+    background-color: #E8E5C9;
+    font-family: 'Century Gothic';
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+header h1 {
+    text-align: center;
+    padding-top: 10px;
+    color: #1BAB6F;
+}
+main{
+    margin:5px;
+}
+main select{
+    width:350px;
+}
+main .divFlex{
+    display:grid;
+    grid-template-columns:80% 20%;
+    grid-column-gap:0px;
+}
+
+main input[type=button] {
+    background-color: #1BAB6F;
+    color:white;
+    border:0px;
+    height:27px;
+    width:17%;
+    font-size:0.7em;
+}
+main input[type=text]{
+    background-color:transparent;
+    width:50%;
+    border:2px solid black;
+}
+main select{
+    background-color:transparent;
+    margin:10px 0px 0px 0px;
+    width:80%;
+}
+main .divRecipients{
+    margin:10px 0px 10px 0px;
+}
+main .divMessage label{
+    width:75px;
+    display:inline-block;
+    margin-bottom:10px;
+}
+main .divMessage input{
+    height:27px;
+    width:80%;
+}
+main .divFilter select{
+    width:100%;
+}
+main .divFilter input{
+    width:40%;
+}

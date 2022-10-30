@@ -13,8 +13,8 @@ header h1 {
 }
 .listDiv{
     margin:10px;
-    border-color: #1BAB6F;
-    border-width: 2px;
+    border-color: black;
+    border-width: 1px;
     border-style: inset;
     overflow-y: scroll;
     height:400px;
@@ -22,14 +22,20 @@ header h1 {
 }
 
 main div div {
+    height: 70px;
     display: grid;
-    grid-template-columns: 1fr 100px;
-    margin-top: 1px;
-    margin-left: 3px;
-    margin-right: 2px;
-    border-bottom:1px medium black;
+    grid-template-columns: 1fr 115px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius:10px;
+    border: 2px groove #1BAB6F;
+}
+main div div:last-child{
+    margin:10px 5px 10px 5px;
 }
 main div div a{
+    padding: 20px 0px 0px 10px;
     display:inline-block;
     font-size:large;
     color:black;
@@ -37,6 +43,9 @@ main div div a{
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
+}
+main div div a:last-child{
+    padding:20px 10px 0px 0px;
 }
 main h5{
     margin:10px;
