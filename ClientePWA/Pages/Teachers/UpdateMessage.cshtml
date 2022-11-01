@@ -1,19 +1,19 @@
 ﻿@page
-@model ClientePWA.Pages.Teachers.AddMessageModel
+@model ClientePWA.Pages.Teachers.UpdateMessageModel
 @{
 }
 <html>
-    <head>
-        <title>Agregar mensaje</title>
-        <link href="~/Styles/styleAddMessageTeacher.css" rel="stylesheet" />
+<head>
+    <title>Editar mensaje</title>
+    <link href="~/Styles/styleUpdateMessageTeacher.css" rel="stylesheet" />
     <meta name"viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <body>
-        <header>
-            <h1>Agregar mensaje</h1>
-        </header>
-        <main>
-            <div class="divFlex">
+</head>
+<body>
+    <header>
+        <h1>Editar mensaje</h1>
+    </header>
+    <main>
+        <div class="divFlex">
             <div>
                 <label>Para:</label>
                 <input readonly type="text" placeholder="Seleccione un destinatorio..." />
@@ -30,31 +30,31 @@
                 <select class="selectFilter" size="5"></select>
                 <br />
             </div>
-            </div>         
-            <div class="divRecipients">
+        </div>
+        <div class="divRecipients">
             <label>Destinatario(s):</label>
             <input class="removeInput" readonly type="text" placeholder="Seleccione un destinatario..." />
             <input class="removeButton" type="button" value="Eliminar destinatario &#10060;" />
             <br />
             <select size="5" class="listOfRecipients"></select>
             <br />
-            </div>  
-            
-            <div class="divMessage">
+        </div>
+
+        <div class="divMessage">
             <label>Asunto:</label>
-            <input type="text" placeholder="Proporcione el asunto a enviar..." />
+            <input type="text" placeholder="Proporcione el asunto a editar..." />
             <br />
             <div class="divMessageFlex">
                 <label class="labelMessage">Mensaje:</label>
-                <textarea rows="10" cols="50" class="textMessage" placeholder="Proporcione el mensaje a enviar..."></textarea>
+                <textarea rows="10" cols="50" class="textMessage" placeholder="Proporcione el mensaje a editar..."></textarea>
             </div>
-        
-            </div>
-       <div class="divButtons">
-           <input type="button" value="Enviar mensaje &#9993;" />
-        <input type="button" value="Cancelar &#10060;" />
-       </div>
-        </main>
-        <script src="~/Scripts/AddMessageTeacherJS.js" type="text/javascript"></script>
-    </body>
+
+        </div>
+        <div class="divButtons">
+            <input type="button" value="Guardar mensaje &#128190;" />
+            <input type="button" value="Cancelar &#10060;" />
+        </div>
+    </main>
+    <script src="~/Scripts/UpdateMessageTeacherJS.js" type="text/javascript"></script>
+</body>
 </html>

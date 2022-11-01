@@ -1,0 +1,1 @@
+﻿let label = document.createElement("label");

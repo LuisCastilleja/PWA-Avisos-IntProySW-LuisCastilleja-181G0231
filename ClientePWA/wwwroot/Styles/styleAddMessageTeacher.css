@@ -12,50 +12,89 @@ header h1 {
     color: #1BAB6F;
 }
 main{
-    margin:5px;
+    padding:10px 5px 5px 15px;
 }
 main select{
     width:350px;
 }
 main .divFlex{
-    display:grid;
-    grid-template-columns:80% 20%;
-    grid-column-gap:0px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+main .divFlex div:first-child{
+    width:80%;
+}
+    main .divFlex div:first-child input[type=text] {
+        width: 285px;
+        height:30px;
+    }
+
+main .divFlex div:last-child input{
+    width:100px;
+    height:30px;
+}
+main .divFlex div:last-child select{
+    width:145px;
 }
 
 main input[type=button] {
     background-color: #1BAB6F;
     color:white;
     border:0px;
-    height:27px;
-    width:17%;
-    font-size:0.7em;
-}
-main input[type=text]{
-    background-color:transparent;
-    width:50%;
-    border:2px solid black;
+    height:30px;
+    width:160px;
+    font-size:0.8em;
+    margin-left:10px;
 }
 main select{
     background-color:transparent;
     margin:10px 0px 0px 0px;
-    width:80%;
+    width:505px;
+    height:100px;
 }
 main .divRecipients{
     margin:10px 0px 10px 0px;
+}
+main .divRecipients input[type=text]{
+    width:211px;
+    height:30px;
 }
 main .divMessage label{
     width:75px;
     display:inline-block;
     margin-bottom:10px;
 }
-main .divMessage input{
-    height:27px;
-    width:80%;
+main .divMessage input {
+    height: 30px;
+    width: 425px;
 }
-main .divFilter select{
-    width:100%;
+main .divMessageFlex {
+    display:flex;
+    flex-wrap:wrap;
+}
+main .divMessageFlex textarea {
+        background-color: transparent;
+        font-size: 1.1em;
+        resize: none;
+        border: 2px double black;
+        margin-left:4px;
 }
 main .divFilter input{
-    width:40%;
+    width:210px;
+}
+main .divButtons {
+    padding-top:20px;
+    padding-left:42px;
+}
+main .divButtons input {
+    width:200px;
+    height:30px;
+}
+main select option{
+    padding:4px 0px 0px 5px;
+}
+main input[type=text]{
+    background-color:transparent;
+    border:2px double black;
 }

@@ -1,0 +1,122 @@
+﻿html, body {
+    background-color: #E8E5C9;
+    font-family: 'Century Gothic';
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    text-align: center;
+    padding-top: 10px;
+    color: #1BAB6F;
+}
+
+main {
+    padding: 10px 5px 5px 15px;
+}
+
+main select {
+        width: 350px;
+}
+
+main .divFlex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+}
+
+main .divFlex div:first-child {
+            width: 80%;
+}
+
+main .divFlex div:first-child input[type=text] {
+                width: 285px;
+                height: 30px;
+}
+
+main .divFlex div:last-child input {
+            width: 100px;
+            height: 30px;
+}
+
+main .divFlex div:last-child select {
+            width: 145px;
+}
+
+main input[type=button] {
+        background-color: #1BAB6F;
+        color: white;
+        border: 0px;
+        height: 30px;
+        width: 160px;
+        font-size: 0.8em;
+        margin-left: 10px;
+}
+
+main select {
+        background-color: transparent;
+        margin: 10px 0px 0px 0px;
+        width: 505px;
+        height: 100px;
+}
+
+main .divRecipients {
+        margin: 10px 0px 10px 0px;
+
+}
+
+main .divRecipients input[type=text] {
+            width: 211px;
+            height: 30px;
+}
+
+main .divMessage label {
+        width: 75px;
+        display: inline-block;
+        margin-bottom: 10px;
+}
+
+main .divMessage input {
+        height: 30px;
+        width: 425px;
+}
+
+main .divMessageFlex {
+        display: flex;
+        flex-wrap: wrap;
+}
+
+main .divMessageFlex textarea {
+            background-color: transparent;
+            font-size: 1.1em;
+            resize: none;
+            border: 2px double black;
+            margin-left: 4px;
+
+}
+
+main .divFilter input {
+        width: 210px;
+}
+
+main .divButtons {
+        padding-top: 20px;
+        padding-left: 42px;
+}
+
+main .divButtons input {
+            width: 200px;
+            height: 30px;
+
+}
+
+main select option {
+        padding: 4px 0px 0px 5px;
+}
+
+main input[type=text] {
+        background-color: transparent;
+        border: 2px double black;
+}
