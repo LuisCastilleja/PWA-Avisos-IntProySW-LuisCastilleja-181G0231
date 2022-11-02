@@ -1,0 +1,68 @@
+﻿html, body {
+    background-color: #E8E5C9;
+    font-family: 'Century Gothic';
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    text-align: center;
+    padding-top: 10px;
+    color: #1BAB6F;
+}
+main .divFlex {
+    display: flex;
+    width: 70%;
+    height: 20%;
+    text-align: justify;
+    overflow-y: scroll;
+    border: 2px double #1BAB6F;
+}
+main .divFlex label{
+    display:inline-block;
+    font-weight:700;
+    margin:5px;
+}
+main .divFlex p {
+        display: inline-block;
+        padding: 0px 5px 0px 5px;
+        margin:5px 0px 0px 0px;
+}
+main .divFlexMessage {
+    display: flex;
+    text-align: justify;
+    width: 70%;
+    height: 40%;
+    overflow-y: scroll;
+    border: 2px double #1BAB6F;
+}
+main .divFlexMessage label {
+        display: inline-block;
+        font-weight: 700;
+        margin:5px;
+}
+main .divFlexMessage p {
+        display: inline-block;
+        padding: 0px 5px 5px 5px;
+        margin: 5px 0px 0px 0px;
+}
+main .dateLabel{
+    text-align:right;
+    display:inline-block;
+    border:2px double #1BAB6F;
+    padding:5px;
+}
+main .divDate{
+    text-align:right;
+    width:70%;
+}
+main input {
+    height: 30px;
+    width: 20%;
+    background-color: #1BAB6F;
+    color:white;
+    font-size:large;
+    border:0px;
+}

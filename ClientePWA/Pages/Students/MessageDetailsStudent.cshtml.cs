@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ClientePWA.Pages.Teachers
+namespace ClientePWA.Pages.Students
 {
-    public class DetailsMessageModel : PageModel
+    public class MessageDetailsStudentModel : PageModel
     {
         public void OnGet()
         {
