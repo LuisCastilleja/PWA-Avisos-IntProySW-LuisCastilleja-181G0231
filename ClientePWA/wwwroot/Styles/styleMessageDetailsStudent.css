@@ -67,7 +67,10 @@ main .divDate {
     width: 70%;
 }
 
-main input {
+main a {
+    padding-top:5px;
+    text-decoration:none;
+    display:block;
     height: 30px;
     width: 20%;
     background-color: #1BAB6F;

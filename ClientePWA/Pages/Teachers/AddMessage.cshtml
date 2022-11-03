@@ -13,6 +13,7 @@
             <h1>Agregar mensaje</h1>
         </header>
         <main>
+            <form>
             <div class="divFlex">
             <div>
                 <label>Para:</label>
@@ -42,18 +43,19 @@
             
             <div class="divMessage">
             <label>Asunto:</label>
-            <input type="text" placeholder="Proporcione el asunto a enviar..." />
+            <input name="affair" type="text" placeholder="Proporcione el asunto a enviar..." />
             <br />
             <div class="divMessageFlex">
                 <label class="labelMessage">Mensaje:</label>
-                <textarea rows="10" cols="50" class="textMessage" placeholder="Proporcione el mensaje a enviar..."></textarea>
+                <textarea name="message" rows="10" cols="50" class="textMessage" placeholder="Proporcione el mensaje a enviar..."></textarea>
             </div>
         
             </div>
        <div class="divButtons">
-           <input type="button" value="Enviar mensaje &#9993;" />
-        <input type="button" value="Cancelar &#10060;" />
+            <a class="aSend">Enviar mensaje &#9993;</a>
+            <a class="aBack">Cancelar &#10060;</a>
        </div>
+        </form>
         </main>
         <script src="~/Scripts/AddMessageTeacherJS.js" type="text/javascript"></script>
     </body>

@@ -11,51 +11,31 @@ header h1 {
     padding-top: 10px;
     color: #1BAB6F;
 }
-.listDiv{
+main {
     margin:10px;
-    border-color: black;
-    border-width: 1px;
-    border-style: inset;
-    overflow-y: scroll;
-    height:400px;
-    overflow-x:hidden;
 }
-
-main div div {
-    height: 70px;
-    display: grid;
-    grid-template-columns: 1fr 115px;
-    margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius:10px;
-    border: 2px groove #1BAB6F;
+main select {
+    width:100%;
+    height:60%;
+    display:block;
+    background-color: transparent;
+    border: 2px double #1BAB6F;
 }
-main div div:last-child{
-    margin:10px 5px 10px 5px;
-}
-main div div a{
-    padding: 20px 0px 0px 10px;
-    display:inline-block;
+main option{
     font-size:large;
-    color:black;
+    padding:3px;
+}
+main center{
+    margin-top:20px;
+}
+main a {
     text-decoration:none;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-}
-main div div a:last-child{
-    padding:20px 10px 0px 0px;
-}
-main h5{
-    margin:10px;
-}
-main input[type=button] {
+    padding-top:5px;
+    margin-top:20px;
     margin-left:10px;
-    margin-top: 20px;
     display: inline-block;
     background-color: #1BAB6F;
-    height: 35px;
+    height: 30px;
     width: 190px;
     font-size: medium;
     color: white;

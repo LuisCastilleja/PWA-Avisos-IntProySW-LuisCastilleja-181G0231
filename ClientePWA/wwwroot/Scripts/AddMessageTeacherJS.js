@@ -50,6 +50,9 @@ let addButton = document.querySelector("input[type=button]");
 let removeInput = document.querySelector(".removeInput");
 let removeButton = document.querySelector(".removeButton");
 let listOfRecipients = document.querySelector(".listOfRecipients");
+let aSend = document.querySelector(".aSend");
+let aBack = document.querySelector(".aBack");
+let form = document.querySelector("form");
 
 //Agregar destinatarios
 function addRecipients() {
@@ -165,4 +168,11 @@ addButton.addEventListener("click", function () {
 //Cuando de al boton eliminar destinatario
 removeButton.addEventListener("click", function () {
     removeRecipients();
+});
+
+aSend.addEventListener("click", function (event) {
+    window.location.replace("/Teachers/Index");
+});
+a.aBack.addEventListener("click", function (event) {
+    window.location.replace("/Teachers/Index");
 });

@@ -35,7 +35,8 @@ main .divFlex div:last-child select{
     width:145px;
 }
 
-main input[type=button] {
+main a {
+    display:inline-block;
     background-color: #1BAB6F;
     color:white;
     border:0px;
