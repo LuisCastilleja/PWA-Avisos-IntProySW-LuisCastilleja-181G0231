@@ -15,15 +15,15 @@
 var listOfGroups = [
     {
         Grupo: "8.2G",
-        ListaEstudiantes: listOfStudents,
+        ListaEstudiantes: [listOfStudents],
     },
     {
         Grupo:"9.1G",
-        ListaEstudiantes: listOfStudents,
+        ListaEstudiantes: [listOfStudents],
     },
     {
         Grupo: "7.1G",
-        ListaEstudiantes: listOfStudents,
+        ListaEstudiantes: [listOfStudents],
     }
 ];
 var listOfSpecialties = [
@@ -117,6 +117,7 @@ selectFilter.options[0].selected = true;
 
 //Cuando de click a una opcion del select de agregar destinatarios
 select.addEventListener("click", function (event) {
+    console.log(event);
     let optionSelected = event.target;
     recipient.value = optionSelected.innerText;
 });
@@ -132,26 +133,20 @@ selectFilter.addEventListener("click", function (event) {
     let selected = event.target;
     inputFilter.value = selected.innerText;
     if (inputFilter.value == "Estudiantes") {
-        if (select.hasChildNodes()) {
-            while (select.options.length > 0) {
-                select.remove(select.options.length - 1);
-            }
+        if (select.children) {
+            select.replaceChildren();
         }
         filterSelect(listOfStudents, "Estudiantes");
     }
     else if (inputFilter.value == "Grupos") {
-        if (select.hasChildNodes()) {
-            while (select.options.length > 0) {
-                select.remove(select.options.length - 1);
-            }
+        if (select.children) {
+            select.replaceChildren();
         }
         filterSelect(listOfGroups, "Grupos");
     }
-        else {
-            if (select.hasChildNodes()) {
-                while (select.options.length > 0) {
-                    select.remove(select.options.length - 1);
-                }
+    else {
+        if (select.children) {
+                select.replaceChildren();
         }
         filterSelect(listOfSpecialties, "Especialidades")
         }      
@@ -162,7 +157,7 @@ selectFilter.addEventListener("click", function (event) {
 addButton.addEventListener("click", function () {
     addRecipients();
     //Pendiente borrar las opciones que ya selecciono
-    //O que no las pueda seleccionar
+    //O que no las pueda seleccionar 
 });
 
 //Cuando de al boton eliminar destinatario
@@ -171,8 +166,12 @@ removeButton.addEventListener("click", function () {
 });
 
 aSend.addEventListener("click", function (event) {
+    let affair = form.elements["affair"].value;
+    let message = form.elements["message"].value;
+    console.log(affair);
+    console.log(message);
     window.location.replace("/Teachers/Index");
 });
-a.aBack.addEventListener("click", function (event) {
+aBack.addEventListener("click", function (event) {
     window.location.replace("/Teachers/Index");
 });

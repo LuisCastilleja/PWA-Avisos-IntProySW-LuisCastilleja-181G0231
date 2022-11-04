@@ -8,5 +8,5 @@ pAffair.innerText = "Augusta Ada King (1815-1852), conocida habitualmente como A
 dateLabel.innerText = "2022/11/01";
 
 aBack.addEventListener("click", function (event) {
-    window.location.replace("/Teachers/Index");
+    window.location.replace("/Students/Index");
 });

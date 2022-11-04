@@ -6,7 +6,18 @@
     margin: 0;
     padding: 0;
 }
+footer {
+    height: 30px;
+    background-image: url('../images/pedazopapelcafe.png');
+}
 
+header {
+    background-image: url('../images/notaamarillagrande.png');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: -40px;
+    background-size: 500px;
+}
 header h1 {
     text-align: center;
     padding-top: 10px;
@@ -14,13 +25,13 @@ header h1 {
 }
 
 main {
-    padding: 10px 5px 5px 15px;
+    padding: 0px 5px 5px 15px;
 }
 
 main .divFlex {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 5px;
 }
 
 main .divFlex div:first-child {
@@ -29,12 +40,12 @@ main .divFlex div:first-child {
 
 main .divFlex div:first-child input[type=text] {
                 width: 285px;
-                height: 30px;
+                height: 27px;
 }
 
 main .divFlex div:last-child input {
             width: 100px;
-            height: 30px;
+            height: 27px;
 }
 
 main .divFlex div:last-child select {
@@ -45,22 +56,35 @@ main input[type=button] {
         background-color: #1BAB6F;
         color: white;
         border: 0px;
-        height: 30px;
+        height: 27px;
         width: 160px;
         font-size: 0.8em;
         margin-left: 10px;
 }
 
+main a {
+        padding-top: 5px;
+        display: inline-block;
+        background-color: #1BAB6F;
+        color: white;
+        border: 0px;
+        height: 30px;
+        width: 160px;
+        font-size: 0.8em;
+        margin-left: 10px;
+        text-align: center;
+        text-decoration: none;
+}
+
 main select {
         background-color: transparent;
-        margin: 10px 0px 0px 0px;
+        margin: 5px 0px 0px 0px;
         width: 505px;
         height: 100px;
 }
 
 main .divRecipients {
         margin: 10px 0px 10px 0px;
-
 }
 
 main .divRecipients input[type=text] {
@@ -75,7 +99,7 @@ main .divMessage label {
 }
 
 main .divMessage input {
-        height: 30px;
+        height: 27px;
         width: 425px;
 }
 
@@ -90,7 +114,6 @@ main .divMessageFlex textarea {
             resize: none;
             border: 2px double black;
             margin-left: 4px;
-
 }
 
 main .divFilter input {
@@ -104,8 +127,7 @@ main .divButtons {
 
 main .divButtons input {
             width: 200px;
-            height: 30px;
-
+            height: 27px;
 }
 
 main select option {

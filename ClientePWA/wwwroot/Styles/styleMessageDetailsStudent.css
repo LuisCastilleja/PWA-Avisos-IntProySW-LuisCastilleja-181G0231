@@ -7,13 +7,26 @@
     padding: 0;
 }
 
+footer {
+    background-image: url('../images/pedazopapelverde.png');
+    background-position-x: center;
+    height: 40px;
+}
+
+header {
+    background-image: url('../images/pedazopapelverde.png');
+    background-position-x: center;
+}
+
 header h1 {
-    text-align: center;
-    padding-top: 10px;
-    color: #1BAB6F;
+        text-align: center;
+        padding-top: 10px;
+        color: black;
+        font-weight: 300;
 }
 
 main .divFlex {
+    flex-wrap: wrap;
     display: flex;
     width: 70%;
     height: 20%;
@@ -22,19 +35,23 @@ main .divFlex {
     border: 2px double #1BAB6F;
 }
 
-    main .divFlex label {
+main .divFlex label {
         display: inline-block;
         font-weight: 700;
         margin: 5px;
-    }
+        font-size: x-large;
+}
 
-    main .divFlex p {
+main .divFlex p {
+        margin: 0px;
         display: inline-block;
         padding: 0px 5px 0px 5px;
-        margin: 5px 0px 0px 0px;
-    }
+        font-size: medium;
+}
 
 main .divFlexMessage {
+    gap: 0px;
+    flex-wrap: wrap;
     display: flex;
     text-align: justify;
     width: 70%;
@@ -43,23 +60,27 @@ main .divFlexMessage {
     border: 2px double #1BAB6F;
 }
 
-    main .divFlexMessage label {
+main .divFlexMessage label {
+        font-size: x-large;
         display: inline-block;
         font-weight: 700;
-        margin: 5px;
-    }
+        margin: 5px 0px 0px 5px;
+        padding: 0px;
+}
 
-    main .divFlexMessage p {
+main .divFlexMessage p {
+        margin: 0px;
         display: inline-block;
-        padding: 0px 5px 5px 5px;
-        margin: 5px 0px 0px 0px;
-    }
+        padding: 5px 5px 0px 5px;
+        font-size: medium;
+}
 
 main .dateLabel {
     text-align: right;
     display: inline-block;
     border: 2px double #1BAB6F;
     padding: 5px;
+    font-size: large;
 }
 
 main .divDate {
@@ -68,9 +89,10 @@ main .divDate {
 }
 
 main a {
-    padding-top:5px;
-    text-decoration:none;
-    display:block;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    display: block;
+    text-decoration: none;
     height: 30px;
     width: 20%;
     background-color: #1BAB6F;

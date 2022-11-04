@@ -1,18 +1,27 @@
 ﻿html, body {
     background-color: #E8E5C9;
     font-family: 'Century Gothic';
-    height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
 }
+body {
+    height: 95%;
+}
+header {
+    margin-top:10px;
+    background-image: url('../images/papelarrugadocafe.png');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
 header h1 {
     text-align: center;
     padding-top: 10px;
-    color: #1BAB6F;
+    color: black;
 }
 main {
-    margin:10px;
+    margin: 10px;
 }
 main select {
     width:100%;
@@ -20,18 +29,27 @@ main select {
     display:block;
     background-color: transparent;
     border: 2px double #1BAB6F;
+    overflow-x:scroll;
 }
 main option{
+    color:black;
+    font-weight:300;
     font-size:large;
     padding:3px;
 }
-main center{
-    margin-top:20px;
-}
+    main center {
+        background-image: url('../images/papelverde.png');
+        height: 20%;
+        margin-top: 20px;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: center;
+        background-size: cover;
+    }
 main a {
     text-decoration:none;
     padding-top:5px;
-    margin-top:20px;
+    margin-top:10px;
     margin-left:10px;
     display: inline-block;
     background-color: #1BAB6F;
