@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientePWA", "ClientePWA\ClientePWA.csproj", "{5B01A92D-AF13-4B03-97F7-D000E031A4A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MensajesAPI", "MensajesAPI\MensajesAPI.csproj", "{D4354932-6481-4C3E-82CC-FFB3BC3A3F70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5B01A92D-AF13-4B03-97F7-D000E031A4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B01A92D-AF13-4B03-97F7-D000E031A4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B01A92D-AF13-4B03-97F7-D000E031A4A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4354932-6481-4C3E-82CC-FFB3BC3A3F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4354932-6481-4C3E-82CC-FFB3BC3A3F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4354932-6481-4C3E-82CC-FFB3BC3A3F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4354932-6481-4C3E-82CC-FFB3BC3A3F70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
