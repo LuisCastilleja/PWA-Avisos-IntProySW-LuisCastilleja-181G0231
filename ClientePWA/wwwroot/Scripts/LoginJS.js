@@ -5,10 +5,10 @@ a.addEventListener("click", function () {
     let password = form.elements["password"].value;
     console.log(email);
     console.log(password);
-    if (email == "2609@rcarbonifera.tecnm.mx" && password == "HectorPadilla") {
+    if (email == "2609@rcarbonifera.tecnm.mx" && password == "Hector123") {
         window.location.replace("/Teachers/Index");
     }
-    else if (email == "181G0231@rcarbonifera.tecnm.mx" && password == "LuisCastilleja") {
+    else if (email == "181G0231@rcarbonifera.tecnm.mx" && password == "Luis123") {
         window.location.replace("/Students/Index");
     }
     else {

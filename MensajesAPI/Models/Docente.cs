@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MensajesAPI.Models
 {
@@ -18,10 +19,13 @@ namespace MensajesAPI.Models
         public string NumeroControl { get; set; } = null!;
         public string Correo { get; set; } = null!;
         public string Contraseña { get; set; } = null!;
-
+        [JsonIgnore]
         public virtual ICollection<AlumnoDocente> AlumnoDocente { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DocenteEspecialidad> DocenteEspecialidad { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DocenteGrupo> DocenteGrupo { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Mensaje> Mensaje { get; set; }
     }
 }

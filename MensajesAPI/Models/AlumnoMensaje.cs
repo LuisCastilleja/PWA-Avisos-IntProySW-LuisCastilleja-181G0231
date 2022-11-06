@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MensajesAPI.Models
 {
@@ -9,7 +10,9 @@ namespace MensajesAPI.Models
         public int FkIdAlumno { get; set; }
         public int FkIdMensaje { get; set; }
 
+        [JsonIgnore]
         public virtual Alumno FkIdAlumnoNavigation { get; set; } = null!;
+        [JsonIgnore]
         public virtual Mensaje FkIdMensajeNavigation { get; set; } = null!;
     }
 }
