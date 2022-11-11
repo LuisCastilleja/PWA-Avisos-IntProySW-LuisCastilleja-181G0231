@@ -19,6 +19,7 @@ namespace MensajesAPI.Models
         public string NumeroControl { get; set; } = null!;
         public string Correo { get; set; } = null!;
         public string Contraseña { get; set; } = null!;
+
         [JsonIgnore]
         public virtual ICollection<AlumnoDocente> AlumnoDocente { get; set; }
         [JsonIgnore]

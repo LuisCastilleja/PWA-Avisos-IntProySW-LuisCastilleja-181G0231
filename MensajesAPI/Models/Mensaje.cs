@@ -20,7 +20,7 @@ namespace MensajesAPI.Models
         public int FkIdDocente { get; set; }
 
         [JsonIgnore]
-        public virtual Docente FkIdDocenteNavigation { get; set; } = null!;
+        public virtual Docente? FkIdDocenteNavigation { get; set; }
         [JsonIgnore]
         public virtual ICollection<AlumnoMensaje> AlumnoMensaje { get; set; }
         [JsonIgnore]

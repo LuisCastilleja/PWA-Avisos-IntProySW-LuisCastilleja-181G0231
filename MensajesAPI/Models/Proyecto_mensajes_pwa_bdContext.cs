@@ -31,7 +31,7 @@ namespace MensajesAPI.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {            
+            {
             }
         }
 
@@ -46,9 +46,7 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdEspecialidad, "FkIdEspecialidad_idx");
 
-                entity.HasIndex(e => e.FkIdGrupo, "FkIdGrupo_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdGrupo, "FkIdGrupoAlumno_idx");
 
                 entity.Property(e => e.Contraseña).HasMaxLength(50);
 
@@ -73,49 +71,43 @@ namespace MensajesAPI.Models
             {
                 entity.ToTable("alumno_docente");
 
-                entity.HasIndex(e => e.FkIdAlumno, "FkIdAlumnoDocente_idx");
+                entity.HasIndex(e => e.FkIdAlumno, "Fk_alumno_docente_alumno_idx");
 
-                entity.HasIndex(e => e.FkIdDocente, "FkIdAlumno_Docente_Docente_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdDocente, "Fk_alumno_docente_docente_idx");
 
                 entity.HasOne(d => d.FkIdAlumnoNavigation)
                     .WithMany(p => p.AlumnoDocente)
                     .HasForeignKey(d => d.FkIdAlumno)
-                    .HasConstraintName("FkIdAlumno_Docente_Alumno");
+                    .HasConstraintName("Fk_alumno_docente_alumno");
 
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.AlumnoDocente)
                     .HasForeignKey(d => d.FkIdDocente)
-                    .HasConstraintName("FkIdAlumno_Docente_Docente");
+                    .HasConstraintName("Fk_alumno_docente_docente");
             });
 
             modelBuilder.Entity<AlumnoMensaje>(entity =>
             {
                 entity.ToTable("alumno_mensaje");
 
-                entity.HasIndex(e => e.FkIdAlumno, "FkIdAlumno_Mensaje_Alumno_idx");
+                entity.HasIndex(e => e.FkIdAlumno, "Fk_alumno_mensaje_alumno_idx");
 
-                entity.HasIndex(e => e.FkIdMensaje, "FkIdAlumno_Mensaje_Mensaje_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdMensaje, "Fk_alumno_mensaje_mensaje_idx");
 
                 entity.HasOne(d => d.FkIdAlumnoNavigation)
                     .WithMany(p => p.AlumnoMensaje)
                     .HasForeignKey(d => d.FkIdAlumno)
-                    .HasConstraintName("FkIdAlumno_Mensaje_Alumno");
+                    .HasConstraintName("Fk_alumno_mensaje_alumno");
 
                 entity.HasOne(d => d.FkIdMensajeNavigation)
                     .WithMany(p => p.AlumnoMensaje)
                     .HasForeignKey(d => d.FkIdMensaje)
-                    .HasConstraintName("FkIdAlumno_Mensaje_Mensaje");
+                    .HasConstraintName("Fk_alumno_mensaje_mensaje");
             });
 
             modelBuilder.Entity<Docente>(entity =>
             {
                 entity.ToTable("docente");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Contraseña).HasMaxLength(50);
 
@@ -130,49 +122,43 @@ namespace MensajesAPI.Models
             {
                 entity.ToTable("docente_especialidad");
 
-                entity.HasIndex(e => e.FkIdDocente, "FkIdDocente_Especialidad_Docente_idx");
+                entity.HasIndex(e => e.FkIdDocente, "Fk_docente_especialidad_docente_idx");
 
-                entity.HasIndex(e => e.FkIdEspecialidad, "FkIdDocente_Especialidad_Especialidad_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdEspecialidad, "Fk_docente_especialidad_especialidad_idx");
 
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.DocenteEspecialidad)
                     .HasForeignKey(d => d.FkIdDocente)
-                    .HasConstraintName("FkIdDocente_Especialidad_Docente");
+                    .HasConstraintName("Fk_docente_especialidad_docente");
 
                 entity.HasOne(d => d.FkIdEspecialidadNavigation)
                     .WithMany(p => p.DocenteEspecialidad)
                     .HasForeignKey(d => d.FkIdEspecialidad)
-                    .HasConstraintName("FkIdDocente_Especialidad_Especialidad");
+                    .HasConstraintName("Fk_docente_especialidad_especialidad");
             });
 
             modelBuilder.Entity<DocenteGrupo>(entity =>
             {
                 entity.ToTable("docente_grupo");
 
-                entity.HasIndex(e => e.FkIdDocente, "FkIdDocente_Grupo_Docente_idx");
+                entity.HasIndex(e => e.FkIdDocente, "Fk_docente_grupo_docente_idx");
 
-                entity.HasIndex(e => e.FkIdGrupo, "FkIdDocente_Grupo_Grupo_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdGrupo, "Fk_docente_grupo_grupo_idx");
 
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.DocenteGrupo)
                     .HasForeignKey(d => d.FkIdDocente)
-                    .HasConstraintName("FkIdDocente_Grupo_Docente");
+                    .HasConstraintName("Fk_docente_grupo_docente");
 
                 entity.HasOne(d => d.FkIdGrupoNavigation)
                     .WithMany(p => p.DocenteGrupo)
                     .HasForeignKey(d => d.FkIdGrupo)
-                    .HasConstraintName("FkIdDocente_Grupo_Grupo");
+                    .HasConstraintName("Fk_docente_grupo_grupo");
             });
 
             modelBuilder.Entity<Especialidad>(entity =>
             {
                 entity.ToTable("especialidad");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Nombre).HasMaxLength(60);
             });
@@ -181,21 +167,19 @@ namespace MensajesAPI.Models
             {
                 entity.ToTable("especialidad_mensaje");
 
-                entity.HasIndex(e => e.FkIdEspecialidad, "FkIdEspecialidad_Mensaje_Especialidad_idx");
+                entity.HasIndex(e => e.FkIdEspecialidad, "Fk_especialidad_mensaje_especialidad_idx");
 
-                entity.HasIndex(e => e.FkIdMensaje, "FkIdEspecialidad_Mensaje_Mensaje_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdMensaje, "Fk_especialidad_mensaje_mensaje_idx");
 
                 entity.HasOne(d => d.FkIdEspecialidadNavigation)
                     .WithMany(p => p.EspecialidadMensaje)
                     .HasForeignKey(d => d.FkIdEspecialidad)
-                    .HasConstraintName("FkIdEspecialidad_Mensaje_Especialidad");
+                    .HasConstraintName("Fk_especialidad_mensaje_especialidad");
 
                 entity.HasOne(d => d.FkIdMensajeNavigation)
                     .WithMany(p => p.EspecialidadMensaje)
                     .HasForeignKey(d => d.FkIdMensaje)
-                    .HasConstraintName("FkIdEspecialidad_Mensaje_Mensaje");
+                    .HasConstraintName("Fk_especialidad_mensaje_mensaje");
             });
 
             modelBuilder.Entity<Grupo>(entity =>
@@ -204,35 +188,31 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdEspecialidad, "FkIdEspecialidad_idx");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Nombre).HasMaxLength(20);
 
                 entity.HasOne(d => d.FkIdEspecialidadNavigation)
                     .WithMany(p => p.Grupo)
                     .HasForeignKey(d => d.FkIdEspecialidad)
-                    .HasConstraintName("FkIdEspecialidad");
+                    .HasConstraintName("FkEspecialidadGrupo");
             });
 
             modelBuilder.Entity<GrupoMensaje>(entity =>
             {
                 entity.ToTable("grupo_mensaje");
 
-                entity.HasIndex(e => e.FkIdGrupo, "FkIdGrupo_Mensaje_Grupo_idx");
+                entity.HasIndex(e => e.FkIdGrupo, "Fk_grupo_mensaje_grupo_idx");
 
-                entity.HasIndex(e => e.FkIdMensaje, "FkIdGrupo_Mensaje_Mensaje_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasIndex(e => e.FkIdMensaje, "Fk_grupo_mensaje_mensaje_idx");
 
                 entity.HasOne(d => d.FkIdGrupoNavigation)
                     .WithMany(p => p.GrupoMensaje)
                     .HasForeignKey(d => d.FkIdGrupo)
-                    .HasConstraintName("FkIdGrupo_Mensaje_Grupo");
+                    .HasConstraintName("Fk_grupo_mensaje_grupo");
 
                 entity.HasOne(d => d.FkIdMensajeNavigation)
                     .WithMany(p => p.GrupoMensaje)
                     .HasForeignKey(d => d.FkIdMensaje)
-                    .HasConstraintName("FkIdGrupo_Mensaje_Mensaje");
+                    .HasConstraintName("Fk_grupo_mensaje_mensaje");
             });
 
             modelBuilder.Entity<Mensaje>(entity =>
@@ -240,8 +220,6 @@ namespace MensajesAPI.Models
                 entity.ToTable("mensaje");
 
                 entity.HasIndex(e => e.FkIdDocente, "FkIdDocente_idx");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Asunto).HasColumnType("text");
 
