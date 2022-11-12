@@ -180,8 +180,7 @@ namespace MensajesAPI.Controllers
                         }
                     }
                 }
-                //Insertar a todas las tablas correspondientes
-                //Extraer los destinatarios en una lista y luego recorrerla para separar por grupo, especialidad y alumno.
+                //Ya cuando agrego la informacion a las tablas regresamos el Ok
                 return Ok();
             }
             else
@@ -189,5 +188,196 @@ namespace MensajesAPI.Controllers
                 return BadRequest(ModelState);
             }
         }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] Mensaje mensaje)
+        {
+            if (mensaje == null)
+            {
+                return BadRequest();
+            }
+            //Buscar el mensaje a editar
+            var mensajeBdEditar = repositoryMensaje.GetAll().FirstOrDefault(x => x.Id == mensaje.Id);
+            //Sino encuentra el mensaje
+            if (mensajeBdEditar == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                //Si encuentra el mensaje validamos que sus propiedades no esten vacias
+                if (string.IsNullOrWhiteSpace(mensaje.Mensaje1))
+                {
+                    ModelState.AddModelError("", "Proporcione el mensaje a enviar");
+                }
+                if (string.IsNullOrWhiteSpace(mensaje.Asunto))
+                {
+                    ModelState.AddModelError("", "Proporcione el asunto a enviar");
+                }
+                if (string.IsNullOrWhiteSpace(mensaje.Destinatarios))
+                {
+                    ModelState.AddModelError("", "Proporcione los destinatarios del mensaje");
+                }
+                if (ModelState.IsValid)
+                {
+                    //Recibimos la lista de destinatarios que edito y lo hacemos un arreglo de strings
+                    string[] destinatariosRecibidos = mensaje.Destinatarios.Split(',');
+                    //Compararemos los destinatarios que recibimos con los que ya teniamos en el mensaje de la base de datos para ver cuales cambiaremos
+                    string[] destintariosMensajeBd = mensajeBdEditar.Destinatarios.Split(',');
+
+                    //Lista de destinatarios que agregaremos o eliminaremos 
+                    List<string> listDestintarios = new List<string>();
+                    //Inicializamos la lista de los destinatarios a agregar con los que nos paso el usuario
+                    foreach (var destintario in destinatariosRecibidos)
+                    {
+                        listDestintarios.Add(destintario);
+                    }
+                    List<string> destinatariosNuevosAgregar = new List<string>();
+                    List<string> destinatariosEliminar = new List<string>();
+
+                    //Foreach para buscar los nuevos destinatarios que vamos a agregar
+                    foreach (var nuevoDestinatario in destinatariosRecibidos)
+                    {
+                        //SI la lista donde estan destinarios antiguos no contiene el nuevo destinatario lo agregamos
+                        if (!destintariosMensajeBd.Contains(nuevoDestinatario))
+                        {
+                            //Lo agregamos al arreglo
+                            destinatariosNuevosAgregar.Add(nuevoDestinatario);
+                        }
+                    }
+
+                    //Recorremos la lista de destintarios antigua para ver si los destintarios que tenia aun siguen estando
+                    foreach (var destintarioBd  in  destintariosMensajeBd)
+                    {
+                        //SI la lista donde estan destinarios antiguos no contiene el nuevo destinatario lo agregamos a la lista
+                        //De los que se eliminaran
+                        if (!listDestintarios.Contains(destintarioBd))
+                        {
+                            //Lo agregamos al arreglo
+                            destinatariosEliminar.Add(destintarioBd);
+                        }
+                    }
+
+                    //ESTE FOREACH ES PARA ELIMINAR LOS DESTINTARIOS QUE ELIMINO EL USUARIO Y LOS BORRAREMOS DE TODAS LAS TABLAS.
+                    foreach (var destinatario in destinatariosEliminar)
+                    {
+                        //Si el destintario contiene la palabra Ing. lo eliminaremos de la tabla Especialidad_Mensaje
+                        if (destinatario.Contains("Ing."))
+                        {
+                            var especialidad = repositoryEspecialidad.GetAll().FirstOrDefault(x => x.Nombre == destinatario);
+                            if (especialidad != null)
+                            {
+                                var especialidad_mensajeEliminar = repositoryEspecialidad_Mensaje.GetAll()
+                                .FirstOrDefault(x => x.FkIdEspecialidad == especialidad.Id && x.FkIdMensaje == mensajeBdEditar.Id);
+                                //Si encontro el objeto que eliminara en la tabla especialidad_mensaje;
+                                if (especialidad_mensajeEliminar != null)
+                                {
+                                    //Lo eliminamos de la tabla
+                                    repositoryEspecialidad_Mensaje.Delete(especialidad_mensajeEliminar);
+                                }
+                            }                     
+                        }
+                        //Si contiene un numero, despues un punto y otro numero quiere decir que es un grupo y lo eliminaremos
+                        //De la tabla Grupo_Mensaje
+                        else if (new Regex("[0-9]").IsMatch(destinatario))
+                        {
+                            var grupo = repositoryGrupo.GetAll().FirstOrDefault(x => x.Nombre == destinatario);
+                            if (grupo != null)
+                            {
+                                var grupo_mensajeEliminar = repositoryGrupo_Mensaje.GetAll()
+                                    .FirstOrDefault(x=>x.FkIdGrupo == grupo.Id && x.FkIdMensaje == mensajeBdEditar.Id);
+
+                                //Si encontro el objeto que eliminara en la tabla de grupo_mensaje
+                                if (grupo_mensajeEliminar != null)
+                                {
+                                    //Lo eliminamos de la tabla
+                                    repositoryGrupo_Mensaje.Delete(grupo_mensajeEliminar);
+                                }
+                            }
+                        }
+                        //Sino, quiere decir que es un alumno y lo eliminaremos de la tabla Alumno_Mensaje
+                        else
+                        {
+                            var alumno = repositoryAlumno.GetAll().FirstOrDefault(x => x.NombreCompleto == destinatario);
+                            if (alumno != null)
+                            {
+                                var alumno_mensajeEliminar = repositoryAlumno_Mensaje.GetAll()
+                                    .FirstOrDefault(x=>x.FkIdAlumno == alumno.Id && x.FkIdMensaje == mensajeBdEditar.Id);
+                                //Si encontro el objeto que eliminara en la tabla de alumno_mensaje
+                                if (alumno_mensajeEliminar != null)
+                                {
+                                    repositoryAlumno_Mensaje.Delete(alumno_mensajeEliminar);
+                                }
+                            }
+                        }
+                    }
+
+
+                    //ESTE FOREACH ES PARA AGREGAR LOS DESTINTARIOS NUEVOS QUE AGREGO EL USUARIO Y LOS AGREGARMOS A TODAS LAS TABLAS.
+                    foreach (var destinatario in destinatariosNuevosAgregar)
+                        {
+                            //Si el destintario contiene la palabra Ing. lo agregaremos a la tabla Especialidad_Mensaje
+                            if (destinatario.Contains("Ing."))
+                            {
+                                var especialidad = repositoryEspecialidad.GetAll().FirstOrDefault(x => x.Nombre == destinatario);
+                                if (especialidad != null)
+                                {
+                                    EspecialidadMensaje especialidad_mensaje = new EspecialidadMensaje()
+                                    {
+                                        FkIdMensaje = mensajeBdEditar.Id,
+                                        FkIdEspecialidad = especialidad.Id
+                                    };
+                                    repositoryEspecialidad_Mensaje.Insert(especialidad_mensaje);
+                                }
+                            }
+                            //Si contiene un numero, despues un punto y otro numero quiere decir que es un grupo y lo agregaremos
+                            //A la tabla Grupo_Mensaje
+                            else if (new Regex("[0-9]").IsMatch(destinatario))
+                            {
+                                var grupo = repositoryGrupo.GetAll().FirstOrDefault(x => x.Nombre == destinatario);
+                                if (grupo != null)
+                                {
+                                    GrupoMensaje grupo_mensaje = new GrupoMensaje()
+                                    {
+                                        FkIdGrupo = grupo.Id,
+                                        FkIdMensaje = mensajeBdEditar.Id
+                                    };
+                                    repositoryGrupo_Mensaje.Insert(grupo_mensaje);
+                                }
+                            }
+                            //Sino, quiere decir que es un alumno y lo agregamos a la tabla Alumno_Mensaje
+                            else
+                            {
+                                var alumno = repositoryAlumno.GetAll().FirstOrDefault(x => x.NombreCompleto == destinatario);
+                                if (alumno != null)
+                                {
+                                    AlumnoMensaje alumno_mensaje = new AlumnoMensaje()
+                                    {
+                                        FkIdAlumno = alumno.Id,
+                                        FkIdMensaje = mensajeBdEditar.Id
+                                    };
+                                    repositoryAlumno_Mensaje.Insert(alumno_mensaje);
+                                }
+                            }
+                        }
+
+                    //Cambiamos los datos del mensaje que teniamos en la bd por los datos del mensaje nuevo que nos enviaron.
+                    mensajeBdEditar.Mensaje1 = mensaje.Mensaje1;
+                    mensajeBdEditar.Destinatarios = mensaje.Destinatarios;
+                    mensajeBdEditar.Asunto = mensaje.Asunto;
+
+                    //Actualizamos el mensaje que teniamos en la bd con la nueva informacion.
+                    repositoryMensaje.Update(mensajeBdEditar);
+                    //Ya cuando termino de agregar y eliminar datos en las tablas correspondientes devolvemos el Ok
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+        }
+
+
     }
 }
