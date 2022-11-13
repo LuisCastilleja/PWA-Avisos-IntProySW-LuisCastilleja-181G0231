@@ -39,57 +39,65 @@ namespace MensajesAPI.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Mensaje> Get(int id)
         {
-            var alumno = repositoryAlumno.GetById(id);
-            if (alumno != null)
+            if (id > 0)
             {
-                listaTablaMensajes = repositoryMensajes.GetAll().ToList();
-                listaAlumnos_Mensajes = repositoryAlumno_Mensaje.GetAll().Where(x => x.FkIdAlumno == alumno.Id).ToList();
-                listaEspecialidad_Mensajes = repositoryEspecialidad_Mensaje.GetAll().Where(x => x.FkIdEspecialidad == alumno.FkIdEspecialidad).ToList();
-                listaGrupo_Mensajes = repositoryGrupo_Mensaje.GetAll().Where(x => x.FkIdGrupo == alumno.FkIdGrupo).ToList();
-            }     
-            //Traer los mensajes que se le enviaron al alumno individualmente
-            if (listaAlumnos_Mensajes != null && listaTablaMensajes!=null)
-            {
-                foreach (var alumno_mensaje in listaAlumnos_Mensajes)
+                var alumno = repositoryAlumno.GetById(id);
+                if (alumno != null)
                 {
-                    foreach (var mensaje in listaTablaMensajes)
+                    listaTablaMensajes = repositoryMensajes.GetAll().ToList();
+                    listaAlumnos_Mensajes = repositoryAlumno_Mensaje.GetAll().Where(x => x.FkIdAlumno == alumno.Id).ToList();
+                    listaEspecialidad_Mensajes = repositoryEspecialidad_Mensaje.GetAll().Where(x => x.FkIdEspecialidad == alumno.FkIdEspecialidad).ToList();
+                    listaGrupo_Mensajes = repositoryGrupo_Mensaje.GetAll().Where(x => x.FkIdGrupo == alumno.FkIdGrupo).ToList();
+                }
+                //Traer los mensajes que se le enviaron al alumno individualmente
+                if (listaAlumnos_Mensajes != null && listaTablaMensajes != null)
+                {
+                    foreach (var alumno_mensaje in listaAlumnos_Mensajes)
                     {
-                        if (alumno_mensaje.FkIdMensaje == mensaje.Id)
+                        foreach (var mensaje in listaTablaMensajes)
                         {
-                            listaMensajes.Add(mensaje);
+                            if (alumno_mensaje.FkIdMensaje == mensaje.Id)
+                            {
+                                listaMensajes.Add(mensaje);
+                            }
                         }
                     }
                 }
-            }
-            //Traer los mensajes que se le enviaron al alumno por grupo
-            if (listaGrupo_Mensajes != null && listaTablaMensajes != null)
-            {
-                foreach (var grupo_mensaje in listaGrupo_Mensajes)
+                //Traer los mensajes que se le enviaron al alumno por grupo
+                if (listaGrupo_Mensajes != null && listaTablaMensajes != null)
                 {
-                    foreach (var mensaje in listaTablaMensajes)
+                    foreach (var grupo_mensaje in listaGrupo_Mensajes)
                     {
-                        if (grupo_mensaje.FkIdMensaje == mensaje.Id)
+                        foreach (var mensaje in listaTablaMensajes)
                         {
-                            listaMensajes.Add(mensaje);
+                            if (grupo_mensaje.FkIdMensaje == mensaje.Id)
+                            {
+                                listaMensajes.Add(mensaje);
+                            }
                         }
                     }
                 }
-            }
-            //Traer los mesajes que se le enviaron al alumno por especialidad
-            if (listaEspecialidad_Mensajes != null && listaTablaMensajes != null)
-            {
-                foreach (var especialidad_mensaje in listaEspecialidad_Mensajes)
+                //Traer los mesajes que se le enviaron al alumno por especialidad
+                if (listaEspecialidad_Mensajes != null && listaTablaMensajes != null)
                 {
-                    foreach (var mensaje in listaTablaMensajes)
+                    foreach (var especialidad_mensaje in listaEspecialidad_Mensajes)
                     {
-                        if (especialidad_mensaje.FkIdMensaje == mensaje.Id)
+                        foreach (var mensaje in listaTablaMensajes)
                         {
-                            listaMensajes.Add(mensaje);
+                            if (especialidad_mensaje.FkIdMensaje == mensaje.Id)
+                            {
+                                listaMensajes.Add(mensaje);
+                            }
                         }
                     }
                 }
+                return listaMensajes;
             }
-            return listaMensajes;
+            else
+            {
+                return listaMensajes;
+            }
+
         }
     }
 }

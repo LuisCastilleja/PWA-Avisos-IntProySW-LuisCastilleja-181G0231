@@ -20,6 +20,7 @@ namespace MensajesAPI.Controllers
         Repository<Docente> repositoryDocente;
         Repository<DocenteEspecialidad> repositoryDocente_Especialidad;
         Repository<DocenteGrupo> repositoryDocente_Grupo;
+        List<Mensaje> listaMensajes = new List<Mensaje>();
         List<DocenteGrupo> listaDocente_Grupo = new List<DocenteGrupo>();
         List<DocenteEspecialidad> listaDocente_Especialidad = new List<DocenteEspecialidad>();
         List<Especialidad> listaTablaEspecialidad = new List<Especialidad>();
@@ -50,58 +51,79 @@ namespace MensajesAPI.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Mensaje> Get(int id)
         {
-            return repositoryMensaje.GetAll().Where(x => x.FkIdDocente == id);
+            if(id > 0)
+            {
+                return repositoryMensaje.GetAll().Where(x => x.FkIdDocente == id);
+            }
+            else
+            {
+                return listaMensajes;
+            }
         }
 
         [HttpGet("Especialidades/{id}")]
         public IEnumerable<Especialidad> GetEspecialidades(int id)
         {
-            Docente docente = repositoryDocente.GetById(id);
-            if (docente != null)
+            if (id > 0)
             {
-                listaDocente_Especialidad = repositoryDocente_Especialidad.GetAll().Where(x => x.FkIdDocente == docente.Id).ToList();
-                listaTablaEspecialidad = repositoryEspecialidad.GetAll().ToList();
-            }
-            if (listaDocente_Especialidad != null && listaTablaEspecialidad != null)
-            {
-                foreach (var docente_Especialidad in listaDocente_Especialidad)
+                Docente docente = repositoryDocente.GetById(id);
+                if (docente != null)
                 {
-                    foreach (var especialidad in listaTablaEspecialidad)
+                    listaDocente_Especialidad = repositoryDocente_Especialidad.GetAll().Where(x => x.FkIdDocente == docente.Id).ToList();
+                    listaTablaEspecialidad = repositoryEspecialidad.GetAll().ToList();
+                }
+                if (listaDocente_Especialidad != null && listaTablaEspecialidad != null)
+                {
+                    foreach (var docente_Especialidad in listaDocente_Especialidad)
                     {
-                        if (docente_Especialidad.FkIdEspecialidad == especialidad.Id)
+                        foreach (var especialidad in listaTablaEspecialidad)
                         {
-                            listaEspecialidades.Add(especialidad);
+                            if (docente_Especialidad.FkIdEspecialidad == especialidad.Id)
+                            {
+                                listaEspecialidades.Add(especialidad);
+                            }
                         }
                     }
                 }
+                return listaEspecialidades;
             }
-            return listaEspecialidades;
+            else
+            {
+                return listaEspecialidades;
+            }
         }
-        
-        
+
+
         [HttpGet("Grupos/{id}")]
         public IEnumerable<Grupo> GetGrupos(int id)
         {
-            Docente docente = repositoryDocente.GetById(id);
-            if (docente != null)
+            if (id > 0)
             {
-                listaDocente_Grupo = repositoryDocente_Grupo.GetAll().Where(x => x.FkIdDocente == docente.Id).ToList();
-                listaTablaGrupos = repositoryGrupo.GetAll().ToList();
-            }
-            if (listaDocente_Grupo != null && listaTablaGrupos != null)
-            {
-                foreach (var docente_grupo in listaDocente_Grupo)
+                Docente docente = repositoryDocente.GetById(id);
+                if (docente != null)
                 {
-                    foreach (var grupo in listaTablaGrupos)
+                    listaDocente_Grupo = repositoryDocente_Grupo.GetAll().Where(x => x.FkIdDocente == docente.Id).ToList();
+                    listaTablaGrupos = repositoryGrupo.GetAll().ToList();
+                }
+                if (listaDocente_Grupo != null && listaTablaGrupos != null)
+                {
+                    foreach (var docente_grupo in listaDocente_Grupo)
                     {
-                        if (docente_grupo.FkIdGrupo == grupo.Id)
+                        foreach (var grupo in listaTablaGrupos)
                         {
-                            listaGrupos.Add(grupo);
+                            if (docente_grupo.FkIdGrupo == grupo.Id)
+                            {
+                                listaGrupos.Add(grupo);
+                            }
                         }
                     }
                 }
+                return listaGrupos;
             }
-            return listaGrupos;
+            else
+            {
+                return listaGrupos;
+            }
         }
 
         [HttpPost]
@@ -122,6 +144,10 @@ namespace MensajesAPI.Controllers
             if (string.IsNullOrWhiteSpace(mensaje.Destinatarios))
             {
                 ModelState.AddModelError("", "Proporcione los destinatarios del mensaje");
+            }
+            if(mensaje.FkIdDocente <= 0)
+            {
+                return BadRequest();
             }
             if (ModelState.IsValid)
             {
@@ -201,7 +227,7 @@ namespace MensajesAPI.Controllers
             //Sino encuentra el mensaje
             if (mensajeBdEditar == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             else
             {
@@ -217,6 +243,10 @@ namespace MensajesAPI.Controllers
                 if (string.IsNullOrWhiteSpace(mensaje.Destinatarios))
                 {
                     ModelState.AddModelError("", "Proporcione los destinatarios del mensaje");
+                }
+                if (mensaje.FkIdDocente <= 0)
+                {
+                    return BadRequest();
                 }
                 if (ModelState.IsValid)
                 {
@@ -378,6 +408,70 @@ namespace MensajesAPI.Controllers
             }
         }
 
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var mensajeEliminar = repositoryMensaje.GetById(id);
+                if (mensajeEliminar != null)
+                {
+                    //Buscamos en la tabla especialidad_mensaje el mensaje que se eliminara por el id del mensaje
+                    var listaEliminarEspecialidad_mensajeEliminar = repositoryEspecialidad_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+                    //Buscamos en la tabla alumno_mensaje el mensaje que se eliminara por el id del mensaje
+                    var listaEliminarAlumno_mensaje = repositoryAlumno_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+                    //Buscamos en la tabla grupo_mensaje el mensaje que se eliminara por el id del mensaje
+                    var listaEliminarGrupo_mensaje = repositoryGrupo_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+
+                    //Si hay mensajes en la tabla especialidad_mensaje por eliminar
+                    if(listaEliminarEspecialidad_mensajeEliminar != null)
+                    {
+                        //Recorremos la lista que tiene los mensajes a eliminar
+                        foreach (var eliminarMensaje in listaEliminarEspecialidad_mensajeEliminar)
+                        {
+                            //Lo eliminamos de la bd
+                            repositoryEspecialidad_Mensaje.Delete(eliminarMensaje);
+                        }
+                    }
+                    //Si hay mensajes en la tabla alumno_mensaje por eliminar
+                    if (listaEliminarAlumno_mensaje != null)
+                    {
+                        //Recorremos la lista que tiene los mensajes a eliminar
+                        foreach (var eliminarMensaje in listaEliminarAlumno_mensaje)
+                        {
+                            //Lo eliminamos de la bd
+                            repositoryAlumno_Mensaje.Delete(eliminarMensaje);
+                        }
+                    }
+                    //Si hay mensajes en la tabla grupo_mensaje por eliminar
+                    if (listaEliminarGrupo_mensaje != null)
+                    {
+                        //Recorremos la lista que tiene los mensajes a eliminar
+                        foreach (var eliminarMensaje in listaEliminarGrupo_mensaje)
+                        {
+                            //Lo eliminamos de la bd
+                            repositoryGrupo_Mensaje.Delete(eliminarMensaje);
+                        }
+                    }
+
+
+                    //Lo eliminamos de la tabla mensajes el mensaje que decidio eliminar el usuario
+                    repositoryMensaje.Delete(mensajeEliminar);
+
+                    //Cuando termine de eliminar en todas las tablas regresamos el Ok
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
 
     }
 }
