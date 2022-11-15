@@ -1,5 +1,6 @@
 ﻿using MensajesAPI.Models;
 using MensajesAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
@@ -8,6 +9,7 @@ namespace MensajesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class DocenteController : ControllerBase
     {
         public Proyecto_mensajes_pwa_bdContext Context { get; }
@@ -27,6 +29,7 @@ namespace MensajesAPI.Controllers
         List<Grupo> listaTablaGrupos = new List<Grupo>();
         List<Especialidad> listaEspecialidades = new List<Especialidad>();
         List<Grupo> listaGrupos = new List<Grupo>();
+        Mensaje detallesMesajeVacio = new Mensaje();
         Repository<AlumnoMensaje> repositoryAlumno_Mensaje;
         Repository<GrupoMensaje> repositoryGrupo_Mensaje;
         Repository<EspecialidadMensaje> repositoryEspecialidad_Mensaje;
@@ -47,6 +50,32 @@ namespace MensajesAPI.Controllers
             repositoryAlumno = new Repository<Alumno>(Context);
             
         }
+
+        [HttpGet("DetallesMensaje/{id}")]
+        public Mensaje GetDetailsOfMessageById(int id)
+        {
+            if (id > 0)
+            {
+                //Buscamos el mensaje en la bd
+                var detallesMensaje = repositoryMensaje.GetAll().FirstOrDefault(x => x.Id == id);
+                //Si lo encuentra lo regresamos
+                if (detallesMensaje != null)
+                {
+                    return detallesMensaje;
+                }
+                else
+                {
+
+                    //Sino encuentra un mensaje devolvemos uno vacio
+                    return detallesMesajeVacio;
+                }
+            }
+            else
+            {
+                return detallesMesajeVacio;
+            }
+        }
+
         //Obtener los mensajes que ha enviado el profesor.
         [HttpGet("{id}")]
         public IEnumerable<Mensaje> Get(int id)

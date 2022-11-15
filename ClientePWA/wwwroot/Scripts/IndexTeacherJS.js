@@ -151,6 +151,7 @@ let aUpdate = document.querySelector(".aUpdate");
 let aDelete = document.querySelector(".aDelete");
 let aDetails = document.querySelector(".aDetails");
 let aLogOut = document.querySelector(".aLogOut");
+const url = "https://localhost:44335/api/";
 
 function generateList() {
     for (let message of listMessages) {
@@ -176,4 +177,15 @@ aDetails.addEventListener("click", function (event) {
 aLogOut.addEventListener("click", function (event) {
     window.location.replace("/Home/Login");
 });
+
+async function getListOfMessages() {
+    //Despues cambiar el 1 por el ID del docente para traer los mensajes que ha enviado
+    var result = await fetch(url + "Docente/" + 1);
+    if (result.ok) {
+        //para tener la informacion en la variable object
+        let object = await result.json();
+        console.log(object);
+    }
+}
+getListOfMessages();
 

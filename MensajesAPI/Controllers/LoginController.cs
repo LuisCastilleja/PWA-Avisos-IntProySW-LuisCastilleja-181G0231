@@ -1,7 +1,12 @@
 ﻿using MensajesAPI.Models;
 using MensajesAPI.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace MensajesAPI.Controllers
 {
@@ -37,31 +42,77 @@ namespace MensajesAPI.Controllers
             {
                 if (profesor.Contraseña != usuario.Contraseña)
                 {
-                    ModelState.AddModelError("", "El usuario o la contraseña son incorrectos");
+                    ModelState.AddModelError("", "El correo o la contraseña son incorrectos");
                     return BadRequest(ModelState);
                 }
                 else
                 {
-                    //Crear las credenciales
-                    return Ok();
+                    //Crear la identidad del usuario.
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, $"{profesor.NombreCompleto}"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Profesor"));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, $"{profesor.Id}"));
+                    //Crear un token.
+                    var handler = new JwtSecurityTokenHandler();
+                    var descriptor = new SecurityTokenDescriptor();
+
+                    descriptor.Issuer = Configuration["JwtAuth:Issuer"];
+                    descriptor.Audience = Configuration["JwtAuth:Audience"];
+                    //La identidad a quien se emite el token.
+                    descriptor.Subject = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+                    //En cuanto tiempo se expira el token que mandamos
+                    descriptor.Expires = DateTime.UtcNow.AddDays(10);
+                    descriptor.IssuedAt = DateTime.UtcNow;
+                    descriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtAuth:Key"])), SecurityAlgorithms.HmacSha256);
+
+                    //Creamos el token
+                    var token = handler.CreateToken(descriptor);
+                    //Serializamos el token
+                    var tokenSerializado = handler.WriteToken(token);
+
+                    //Regresamos el token
+                    return Ok(tokenSerializado);
                 }
             }
             else if (alumno != null)
             {
                 if (alumno.Contraseña != usuario.Contraseña)
                 {
-                    ModelState.AddModelError("", "El usuario o la contraseña son incorrectos");
+                    ModelState.AddModelError("", "El correo o la contraseña son incorrectos");
                     return BadRequest(ModelState);
                 }
                 else
                 {
-                    //Crear las credenciales
-                    return Ok();
+                    //Crear la identidad del usuario.
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, $"{alumno.NombreCompleto}"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Alumno"));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, $"{alumno.Id}"));
+                    //Crear un token.
+                    var handler = new JwtSecurityTokenHandler();
+                    var descriptor = new SecurityTokenDescriptor();
+
+                    descriptor.Issuer = Configuration["JwtAuth:Issuer"];
+                    descriptor.Audience = Configuration["JwtAuth:Audience"];
+                    //La identidad a quien se emite el token.
+                    descriptor.Subject = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+                    //En cuanto tiempo se expira el token que mandamos
+                    descriptor.Expires = DateTime.UtcNow.AddDays(10);
+                    descriptor.IssuedAt = DateTime.UtcNow;
+                    descriptor.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtAuth:Key"])), SecurityAlgorithms.HmacSha256);
+
+                    //Creamos el token
+                    var token = handler.CreateToken(descriptor);
+                    //Serializamos el token
+                    var tokenSerializado = handler.WriteToken(token);
+
+                    //Regresamos el token
+                    return Ok(tokenSerializado);
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Este correo no está asociado a ningun usuario en el sistema");
+                ModelState.AddModelError("", "El correo o la contraseña son incorrectos");
                 return BadRequest(ModelState);
             }
         }
