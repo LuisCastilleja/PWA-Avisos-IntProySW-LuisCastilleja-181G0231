@@ -28,9 +28,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 var app = builder.Build();
 app.UseFileServer();
 app.UseAuthentication();
-app.UseAuthorization();
-app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthorization();
+app.UseDeveloperExceptionPage();
 app.UseEndpoints(endpoints=> endpoints.MapDefaultControllerRoute());
 app.Run();
 

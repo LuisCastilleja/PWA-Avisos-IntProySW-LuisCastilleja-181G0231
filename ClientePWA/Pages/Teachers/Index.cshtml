@@ -6,6 +6,7 @@
     <head>
         <title>Lista de mensajes</title>
     <link type="text/css" href="~/Styles/styleIndexTeacher.css" rel="stylesheet" />
+    <link href="~/manifest.json" rel="manifest" />
     <meta name"viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
@@ -16,13 +17,21 @@
             <select size="10" class="select">
             </select>
             <center>
-        <a class="aDetails">Ver detalles &#128269;</a>
-        <a class="aAdd">Agregar mensaje &#10133;</a>
-        <a class="aUpdate">Editar mensaje &#10133;</a>
-        <a class="aDelete">Eliminar mensaje &#10133;</a>
-        <a class="aLogOut">Cerrar sesión &#128228;</a>
+        <a  data-details="details">Ver detalles &#128269;</a>
+        <a  data-add="add">Agregar mensaje &#10133;</a>
+        <a data-update="update">Editar mensaje &#10133;</a>
+        <a data-delete="delete">Eliminar mensaje &#10133;</a>
+        <a  data-logout ="logout">Cerrar sesión &#128228;</a>
         </center>
         </main>
+    <script type="text/javascript">
+        if (navigator.serviceWorker) {
+            //Registranos al service worker
+            navigator.serviceWorker.register("/ServiceWorkerJS.js");
+            //Aqui recibo los mensajes de actualizacion de datos.
+        }
+    </script>
     <script type="text/javascript" src="~/Scripts/IndexTeacherJS.js"></script>
+    <script type="text/javascript" src="~/Scripts/ClickAndSubmitJS.js"></script>
     </body>
 </html>

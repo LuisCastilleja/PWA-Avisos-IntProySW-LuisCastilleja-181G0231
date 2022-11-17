@@ -146,8 +146,6 @@
     },
 ]
 let select = document.querySelector("select");
-let aDetails = document.querySelector(".aDetails");
-let aLogOut = document.querySelector(".aLogOut");
 
 function generateList() {
     for (let message of listMessages) {
@@ -157,9 +155,3 @@ function generateList() {
     }
 }
 generateList();
-aDetails.addEventListener("click", function (event) {
-    window.location.replace("/Students/MessageDetailsStudent");
-});
-aLogOut.addEventListener("click", function (event) {
-    window.location.replace("/Home/Login");
-});

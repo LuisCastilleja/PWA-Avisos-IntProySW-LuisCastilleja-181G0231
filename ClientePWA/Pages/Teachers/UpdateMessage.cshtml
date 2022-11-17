@@ -6,6 +6,7 @@
     <head>
         <title>Agregar mensaje</title>
         <link href="~/Styles/styleUpdateMessageTeacher.css" rel="stylesheet" />
+    <link href="~/manifest.json" rel="manifest" />
     <meta name"viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
@@ -52,13 +53,21 @@
         
             </div>
        <div class="divButtons">
-            <a class="aSend">Guardar mensaje &#128190</a>
-            <a class="aBack">Cancelar &#10060;</a>
+            <a data-updatemessage="updateMessage" class="aSend">Guardar mensaje &#128190</a>
+                <a data-cancelteacher="cancelTeacher" class="aBack">Cancelar &#10060;</a>
        </div>
         </form>
         </main>
         <footer></footer>
+    <script type="text/javascript">
+        if (navigator.serviceWorker) {
+            //Registranos al service worker
+            navigator.serviceWorker.register("/ServiceWorkerJS.js");
+            //Aqui recibo los mensajes de actualizacion de datos.
+        }
+    </script>
         <script src="~/Scripts/UpdateMessageTeacherJS.js" type="text/javascript"></script>
+        <script src="~/Scripts/ClickAndSubmitJS.js" type="text/javascript"></script>
     </body>
 </html>
 
