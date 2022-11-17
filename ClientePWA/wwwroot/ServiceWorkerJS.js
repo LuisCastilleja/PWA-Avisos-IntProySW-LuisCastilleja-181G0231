@@ -25,7 +25,7 @@ async function verify(event) {
             let result = await fetch(event.request);
             //Si me regresa un ok
             if (result.ok) {
-                //Guardamos en cache una copia de lo que recibimos y mando un clon.
+                //Actualizamos el contenido del cache con lo que tiene result
                 await cache.put(event.request, result.clone());
                 return result;
             }
@@ -53,7 +53,7 @@ async function revalidate(request, clientId) {
         if (responseText != cacheText) {
             //Abrimos cache para guardarlo
             let cache = await caches.open("cacheAPI");
-            //Guarda en response url el clon
+            //Actualizamos el contenido del cache con lo que tiene result
             await cache.put(response.url, clone);
 
             //Clients es una propiedad que tiene el service worker que identificar los usuarios que tiene registados
