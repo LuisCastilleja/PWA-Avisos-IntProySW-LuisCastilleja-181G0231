@@ -14,10 +14,10 @@ namespace MensajesAPI.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        public Proyecto_mensajes_pwa_bdContext Context { get;}
+        public itesrcne_pwa_mensajes_181g0231_bdContext Context { get;}
         public IConfiguration Configuration { get; }
 
-        public LoginController(Proyecto_mensajes_pwa_bdContext context, IConfiguration configuration)
+        public LoginController(itesrcne_pwa_mensajes_181g0231_bdContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

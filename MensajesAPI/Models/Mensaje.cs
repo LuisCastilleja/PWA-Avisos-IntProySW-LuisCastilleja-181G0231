@@ -15,12 +15,13 @@ namespace MensajesAPI.Models
 
         public int Id { get; set; }
         public string Asunto { get; set; } = null!;
-        public string Mensaje1 { get; set; } = null!;
+        public string MensajeEnviado { get; set; } = null!;
         public string Destinatarios { get; set; } = null!;
         public int FkIdDocente { get; set; }
+        public DateTime FechaEnvio { get; set; }
 
         [JsonIgnore]
-        public virtual Docente? FkIdDocenteNavigation { get; set; }
+        public virtual Docente? FkIdDocenteNavigation { get; set; } = null!;
         [JsonIgnore]
         public virtual ICollection<AlumnoMensaje> AlumnoMensaje { get; set; }
         [JsonIgnore]

@@ -19,11 +19,11 @@ namespace MensajesAPI.Models
         public string Contraseña { get; set; } = null!;
         public int FkIdGrupo { get; set; }
         public int FkIdEspecialidad { get; set; }
+
         [JsonIgnore]
         public virtual Especialidad FkIdEspecialidadNavigation { get; set; } = null!;
         [JsonIgnore]
         public virtual Grupo FkIdGrupoNavigation { get; set; } = null!;
-        [JsonIgnore]
         public virtual ICollection<AlumnoDocente> AlumnoDocente { get; set; }
         [JsonIgnore]
         public virtual ICollection<AlumnoMensaje> AlumnoMensaje { get; set; }

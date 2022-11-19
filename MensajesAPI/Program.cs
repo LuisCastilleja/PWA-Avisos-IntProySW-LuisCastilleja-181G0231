@@ -12,7 +12,7 @@ string audience = builder.Configuration["JwtAuth:Audience"];
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<Proyecto_mensajes_pwa_bdContext>(optionsBuilder => optionsBuilder.UseMySql("server=localhost;user=root;password=root;database=Proyecto_mensajes_pwa_bd", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.26-mysql")));
+builder.Services.AddDbContext<itesrcne_pwa_mensajes_181g0231_bdContext>(optionsBuilder => optionsBuilder.UseMySql("server=204.93.216.11;user=itesrcne_luis;password=bgCS4XWebZkBwSE;database=itesrcne_pwa_mensajes_181g0231_bd", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.3.29-mariadb")));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options =>
                 {
@@ -26,11 +26,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 }
                 );
 var app = builder.Build();
+//Habilitar CORS
+app.UseCors(x => x
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) 
+                 .AllowCredentials());
 app.UseFileServer();
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
-app.UseDeveloperExceptionPage();
+app.UseHttpsRedirection();
 app.UseEndpoints(endpoints=> endpoints.MapDefaultControllerRoute());
 app.Run();
 

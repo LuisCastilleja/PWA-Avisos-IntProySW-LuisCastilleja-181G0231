@@ -1,17 +1,18 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MensajesAPI.Models
 {
-    public partial class Proyecto_mensajes_pwa_bdContext : DbContext
+    public partial class itesrcne_pwa_mensajes_181g0231_bdContext : DbContext
     {
-        public Proyecto_mensajes_pwa_bdContext()
+        public itesrcne_pwa_mensajes_181g0231_bdContext()
         {
         }
 
-        public Proyecto_mensajes_pwa_bdContext(DbContextOptions<Proyecto_mensajes_pwa_bdContext> options)
+        public itesrcne_pwa_mensajes_181g0231_bdContext(DbContextOptions<itesrcne_pwa_mensajes_181g0231_bdContext> options)
             : base(options)
         {
         }
@@ -37,8 +38,8 @@ namespace MensajesAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
+            modelBuilder.UseCollation("utf8_general_ci")
+                .HasCharSet("utf8");
 
             modelBuilder.Entity<Alumno>(entity =>
             {
@@ -48,9 +49,15 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdGrupo, "FkIdGrupoAlumno_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
                 entity.Property(e => e.Contraseña).HasMaxLength(50);
 
                 entity.Property(e => e.Correo).HasMaxLength(100);
+
+                entity.Property(e => e.FkIdEspecialidad).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdGrupo).HasColumnType("int(11)");
 
                 entity.Property(e => e.NombreCompleto).HasMaxLength(100);
 
@@ -75,6 +82,12 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdDocente, "Fk_alumno_docente_docente_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdAlumno).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdDocente).HasColumnType("int(11)");
+
                 entity.HasOne(d => d.FkIdAlumnoNavigation)
                     .WithMany(p => p.AlumnoDocente)
                     .HasForeignKey(d => d.FkIdAlumno)
@@ -94,6 +107,12 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdMensaje, "Fk_alumno_mensaje_mensaje_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdAlumno).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdMensaje).HasColumnType("int(11)");
+
                 entity.HasOne(d => d.FkIdAlumnoNavigation)
                     .WithMany(p => p.AlumnoMensaje)
                     .HasForeignKey(d => d.FkIdAlumno)
@@ -108,6 +127,8 @@ namespace MensajesAPI.Models
             modelBuilder.Entity<Docente>(entity =>
             {
                 entity.ToTable("docente");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
 
                 entity.Property(e => e.Contraseña).HasMaxLength(50);
 
@@ -125,6 +146,12 @@ namespace MensajesAPI.Models
                 entity.HasIndex(e => e.FkIdDocente, "Fk_docente_especialidad_docente_idx");
 
                 entity.HasIndex(e => e.FkIdEspecialidad, "Fk_docente_especialidad_especialidad_idx");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdDocente).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdEspecialidad).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.DocenteEspecialidad)
@@ -145,6 +172,12 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdGrupo, "Fk_docente_grupo_grupo_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdDocente).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdGrupo).HasColumnType("int(11)");
+
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.DocenteGrupo)
                     .HasForeignKey(d => d.FkIdDocente)
@@ -160,6 +193,8 @@ namespace MensajesAPI.Models
             {
                 entity.ToTable("especialidad");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
                 entity.Property(e => e.Nombre).HasMaxLength(60);
             });
 
@@ -170,6 +205,12 @@ namespace MensajesAPI.Models
                 entity.HasIndex(e => e.FkIdEspecialidad, "Fk_especialidad_mensaje_especialidad_idx");
 
                 entity.HasIndex(e => e.FkIdMensaje, "Fk_especialidad_mensaje_mensaje_idx");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdEspecialidad).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdMensaje).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.FkIdEspecialidadNavigation)
                     .WithMany(p => p.EspecialidadMensaje)
@@ -188,6 +229,10 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdEspecialidad, "FkIdEspecialidad_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdEspecialidad).HasColumnType("int(11)");
+
                 entity.Property(e => e.Nombre).HasMaxLength(20);
 
                 entity.HasOne(d => d.FkIdEspecialidadNavigation)
@@ -203,6 +248,12 @@ namespace MensajesAPI.Models
                 entity.HasIndex(e => e.FkIdGrupo, "Fk_grupo_mensaje_grupo_idx");
 
                 entity.HasIndex(e => e.FkIdMensaje, "Fk_grupo_mensaje_mensaje_idx");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdGrupo).HasColumnType("int(11)");
+
+                entity.Property(e => e.FkIdMensaje).HasColumnType("int(11)");
 
                 entity.HasOne(d => d.FkIdGrupoNavigation)
                     .WithMany(p => p.GrupoMensaje)
@@ -221,13 +272,17 @@ namespace MensajesAPI.Models
 
                 entity.HasIndex(e => e.FkIdDocente, "FkIdDocente_idx");
 
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
                 entity.Property(e => e.Asunto).HasColumnType("text");
 
                 entity.Property(e => e.Destinatarios).HasColumnType("text");
 
-                entity.Property(e => e.Mensaje1)
-                    .HasColumnType("text")
-                    .HasColumnName("Mensaje");
+                entity.Property(e => e.FechaEnvio).HasColumnType("datetime");
+
+                entity.Property(e => e.FkIdDocente).HasColumnType("int(11)");
+
+                entity.Property(e => e.MensajeEnviado).HasColumnType("text");
 
                 entity.HasOne(d => d.FkIdDocenteNavigation)
                     .WithMany(p => p.Mensaje)

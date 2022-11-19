@@ -1,161 +1,14 @@
-﻿var listMessages = [
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto cambiado",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-      {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto change",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-    {
-        Asunto: "Este es un nuevo asunto changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        Mensaje: "Mensaje nuevo",
-        Fecha: "28/01/2000"
-    },
-]
-let select = document.querySelector("select");
+﻿let select = document.querySelector("select");
 const url = "https://pwa-mensajes-181g0231.itesrc.net/api/docente/";
 
-function generateList() {
-    for (let message of listMessages) {
+function generateList(listMessages) {
+    for (i = 0; i < listMessages.length; i++) {
         let option = document.createElement("option");
-        option.innerHTML = message.Asunto + " " + "(" + "Fecha de envio:" + " " + message.Fecha + ")";
+        let fecha = new Date(listMessages[i].fechaEnvio).toLocaleDateString();
+        option.innerHTML = listMessages[i].asunto + " " + "(" + "Fecha de envio:" + fecha + ")";
         select.appendChild(option);
     }
 }
-generateList();
 
 async function getListOfMessages() {
     //Despues cambiar el 1 por el ID del docente para traer los mensajes que ha enviado
@@ -163,7 +16,7 @@ async function getListOfMessages() {
     if (result.ok) {
         //para tener la informacion en la variable object
         let object = await result.json();
-        console.log(object);
+        generateList(object);
     }
 }
 getListOfMessages();

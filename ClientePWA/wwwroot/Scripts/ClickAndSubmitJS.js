@@ -1,4 +1,4 @@
-﻿let formLogin = document.getElementById(".formLogin");
+﻿let formLogin = document.getElementById("formLogin");
 
 document.addEventListener("click", function (event) {
     //Cuando se da click a la a del login

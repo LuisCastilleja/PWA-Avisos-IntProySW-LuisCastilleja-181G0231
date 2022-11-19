@@ -11,7 +11,7 @@ namespace MensajesAPI.Controllers
     //[Authorize]
     public class AlumnoController : ControllerBase
     {
-        public Proyecto_mensajes_pwa_bdContext Context { get; }
+        public itesrcne_pwa_mensajes_181g0231_bdContext Context { get; }
         public IConfiguration Configuration { get; }
 
         Repository<AlumnoMensaje> repositoryAlumno_Mensaje;
@@ -26,7 +26,7 @@ namespace MensajesAPI.Controllers
         List<GrupoMensaje> listaGrupo_Mensajes = new List<GrupoMensaje>();
         Mensaje detallesMesajeVacio = new Mensaje();
 
-        public AlumnoController(Proyecto_mensajes_pwa_bdContext context, IConfiguration configuration)
+        public AlumnoController(itesrcne_pwa_mensajes_181g0231_bdContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;

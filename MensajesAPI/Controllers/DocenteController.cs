@@ -12,7 +12,7 @@ namespace MensajesAPI.Controllers
     //[Authorize]
     public class DocenteController : ControllerBase
     {
-        public Proyecto_mensajes_pwa_bdContext Context { get; }
+        public itesrcne_pwa_mensajes_181g0231_bdContext Context { get; }
         public IConfiguration Configuration { get; }
 
         Repository<Mensaje> repositoryMensaje;
@@ -34,7 +34,7 @@ namespace MensajesAPI.Controllers
         Repository<GrupoMensaje> repositoryGrupo_Mensaje;
         Repository<EspecialidadMensaje> repositoryEspecialidad_Mensaje;
 
-        public DocenteController(Proyecto_mensajes_pwa_bdContext context, IConfiguration configuration)
+        public DocenteController(itesrcne_pwa_mensajes_181g0231_bdContext context, IConfiguration configuration)
         {
             Context = context;
             Configuration = configuration;
@@ -162,7 +162,7 @@ namespace MensajesAPI.Controllers
             {
                 return BadRequest();
             }
-            if(string.IsNullOrWhiteSpace(mensaje.Mensaje1))
+            if(string.IsNullOrWhiteSpace(mensaje.MensajeEnviado))
             {
                 ModelState.AddModelError("", "Proporcione el mensaje a enviar");
             }
@@ -261,7 +261,7 @@ namespace MensajesAPI.Controllers
             else
             {
                 //Si encuentra el mensaje validamos que sus propiedades no esten vacias
-                if (string.IsNullOrWhiteSpace(mensaje.Mensaje1))
+                if (string.IsNullOrWhiteSpace(mensaje.MensajeEnviado))
                 {
                     ModelState.AddModelError("", "Proporcione el mensaje a enviar");
                 }
@@ -421,7 +421,7 @@ namespace MensajesAPI.Controllers
                         }
 
                     //Cambiamos los datos del mensaje que teniamos en la bd por los datos del mensaje nuevo que nos enviaron.
-                    mensajeBdEditar.Mensaje1 = mensaje.Mensaje1;
+                    mensajeBdEditar.MensajeEnviado = mensaje.MensajeEnviado;
                     mensajeBdEditar.Destinatarios = mensaje.Destinatarios;
                     mensajeBdEditar.Asunto = mensaje.Asunto;
 
