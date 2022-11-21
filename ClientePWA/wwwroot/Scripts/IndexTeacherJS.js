@@ -16,7 +16,11 @@ async function getListOfMessages() {
     if (result.ok) {
         //para tener la informacion en la variable object
         let object = await result.json();
+        //Lamamos el metodo para generar la lista de mensajes
         generateList(object);
+    }
+    else {
+        console.log(result.status);
     }
 }
 getListOfMessages();

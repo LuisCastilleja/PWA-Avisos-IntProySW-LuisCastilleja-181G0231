@@ -29,6 +29,11 @@
             //Registranos al service worker
             navigator.serviceWorker.register("/ServiceWorkerJS.js");
             //Aqui recibo los mensajes de actualizacion de datos.
+            navigator.serviceWorker.addEventListener("message", function(event){
+                if (event.data.url.includes(url + "/docente/")) {
+                    generateList(event.data.data);
+                }
+            });
         }
     </script>
     <script type="text/javascript" src="~/Scripts/IndexTeacherJS.js"></script>

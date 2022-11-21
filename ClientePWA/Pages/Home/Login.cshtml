@@ -15,7 +15,7 @@
         </header>
         <main>
             <center>
-            <form method="post" id="formLogin">
+            <form method="post" data-login="login" data-action="Login">
              <div class="divGrid">
 
              <div class="divEmail">
@@ -25,10 +25,10 @@
             <div class="divPassword">
             <br />
             <label>Contraseña:</label>
-            <input name="password" type="password" required />
+            <input name="contraseña" type="password" required />
             </div>
             <br />
-                    <a data-login="login">Entrar &#128229;</a>
+                    <input type="submit" value="Entrar &#128229;" data-login="login" />
                 </div>
             </form>
             </center>      
@@ -41,7 +41,6 @@
                 //Aqui recibo los mensajes de actualizacion de datos.
             }
                 </script>
-        <script src="~/Scripts/LoginJS.js" type="text/javascript"></script>
         <script src="~/Scripts/ClickAndSubmitJS.js" type="text/javascript"></script>
         </center>
     </body>

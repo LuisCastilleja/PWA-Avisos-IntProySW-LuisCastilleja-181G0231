@@ -1,17 +1,17 @@
 ﻿self.addEventListener("fetch", function (event) {
-
+    event.respondWith(verify(event));
 });
 
 async function verify(event) {
     //Si la peticion va a la API
-    if (event.request.url.includes("/api/")) {
+    if (event.request.url.includes("/api/" && event.request == "GET")) {
 
         //Abrimos cache
         let cache = await caches.open("cacheAPI");
         //Ver si ya hay una cache guardada con esa peticion
         let saved = await cache.match("cacheAPI");
         //Si ya hay una guardada
-        if (guardada) {
+        if (saved) {
             //Para obtener el ID de la pagina que voy a actualizar
             let clientId = event.clientId;
             //saved es nuestra cache que ya esta "obsoleta"
