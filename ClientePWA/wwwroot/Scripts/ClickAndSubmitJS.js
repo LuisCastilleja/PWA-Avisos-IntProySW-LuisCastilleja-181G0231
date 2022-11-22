@@ -1,4 +1,4 @@
-﻿const url2 = "http://pwa-mensajes-181g0231.itesrc.net/api/";
+﻿localStorage.url = "https://pwa-mensajes-181g0231.itesrc.net/api/";
 
 document.addEventListener("click", function (event) {
     
@@ -12,7 +12,13 @@ document.addEventListener("click", function (event) {
         alert("Pendiente crear un modal para eliminar");
     }
     if (event.target.dataset.details) {
-        window.location.replace("/Teachers/MessageDetailsTeacher");
+        if (localStorage.idMessage != "") {
+            window.location.replace("/Teachers/MessageDetailsTeacher");
+        }
+        else {
+            //Decir que seleccione un mensaje para ver los detalles en un label, luego quito el Alert
+            alert("Seleccione un mensaje para ver sus detalles");
+        }
     }
     if (event.target.dataset.logout) {
         window.location.replace("/Home/Login");
@@ -38,7 +44,13 @@ document.addEventListener("click", function (event) {
         window.location.replace("/Students/Index");
     }
     if (event.target.dataset.detailsstudent) {
-        window.location.replace("/Students/MessageDetailsStudent");
+        if (localStorage.studentIdMessage != "") {
+            window.location.replace("/Students/MessageDetailsStudent");
+        }
+        else {
+            //Decir que seleccione un mensaje para ver los detalles en un label, luego quito el Alert
+            alert("Seleccione un mensaje para ver sus detalles");
+        }
     }
 });
 
@@ -46,19 +58,60 @@ document.addEventListener("submit", async function (event) {
         //Para cancelar el evento submit, (Override) para poder programar lo que queramos que pase cuando se haga un submit
     event.preventDefault();
     let form = event.target;
+
     if (event.target.dataset.login) {
-         if (event.target.dataset.login) {
-        if (form.elements["email"].value) {
+        if (form.elements["correo"].value) { 
             if (form.elements["contraseña"].value) {
-                
-                if (form.elements["email"].value == "2609@rcarbonifera.tecnm.mx" && form.elements["contraseña"].value == "Hector123") {
-                    window.location.replace("/Teachers/Index");
+                let jsonLogin = Object.fromEntries(new FormData(form));
+                const requestInfo = {
+                    method: "POST",
+                    body: JSON.stringify(jsonLogin),
+                    mode: 'cors',
+                    headers: {
+                        'Accept':'application/json',
+                        'Content-type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': '*'
+                    }
+                };
+                let response = await fetch(`${localStorage.url}${form.dataset.action}`, requestInfo);
+                if (response.ok) {
+                    //Guardar lo que nos respondio el servidor
+                    let credentials = await response.json();
+                    //Guardar en localStorage en token
+                    localStorage.token = credentials;
+                    //Para separar las credenciales en, nombre, id y rol, que esta en string
+                    let arrayOfData = credentials.split('.');
+                    console.log(arrayOfData);
+                    let data = arrayOfData[1];
+                    console.log(data);
+
+                    //Decodificar a string el token.
+                    var decodeString = atob(data);
+                    //Hacer el json con los datos decodificados.
+                    var json = JSON.parse(decodeString);
+                    //Guardar las credenciales en localStorage
+                    //Nombre del usuario
+                    localStorage.nameUser = json.name;
+                    //Id del usuario
+                    localStorage.idUser = json.nameid;
+                    //Rol del usuario
+                    localStorage.rolUser = json.role;
+
+                    if (localStorage.rolUser == "Profesor") {
+                        window.location.replace("/Teachers/Index");
+                    }
+                    else {
+                        window.location.replace("/Students/Index");
+                    }
+                    form.reset();
                 }
-                else if (form.elements["email"].value == "181G0231@rcarbonifera.tecnm.mx" && form.elements["contraseña"].value == "Luis123") {
-                    window.location.replace("/Students/Index");
-                }
+                //Sino el status no es ok
                 else {
-                    alert("Usuario o contraseña incorrecto. Despues lo sustituire por un error en un label si es incorrecto");
+                    console.log(response);
+                    console.log(response.body);
+                    console.log(response.status);
+                    console.log(response.statusText);
                 }
             }
             else {
@@ -70,42 +123,7 @@ document.addEventListener("submit", async function (event) {
             email.setCustomValidity('Proporcione su correo electronico');
             email.reportValidity();
         }
-
-    }
-    }
-    //if (event.target.dataset.login) {
-    //    if (form.elements["email"].value) { 
-    //        if (form.elements["contraseña"].value) {
-    //            let jsonLogin = Object.fromEntries(new FormData(form));
-    //            const requestInfo = {
-    //                method: "POST",
-    //                body: JSON.stringify(jsonLogin),
-    //                mode: 'cors',
-    //                headers: {
-    //                    'Content-type': 'application/json'
-    //                }
-    //            };
-    //            let response = await fetch(`${url2}${form.dataset.action}`, requestInfo);
-    //            if (response.ok) {
-    //                console.log(response.body);
-    //                console.log(response.headers);
-    //                form.reset();
-    //            }
-    //            else {
-    //                console.log(response.status);
-    //                console.log(response.statusText);
-    //            }
-    //        }
-    //        else {
-    //            password.setCustomValidity('Proporcione su contraseña');
-    //            password.reportValidity();
-    //        }
-    //    }
-    //    else {
-    //        email.setCustomValidity('Proporcione su correo electronico');
-    //        email.reportValidity();
-    //    }
        
-    //}
+    }
 
 });
