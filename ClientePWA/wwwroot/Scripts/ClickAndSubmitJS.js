@@ -23,13 +23,6 @@ document.addEventListener("click", function (event) {
     if (event.target.dataset.logout) {
         window.location.replace("/Home/Login");
     }
-    if (event.target.dataset.sendmessage) {
-        let affair = form.elements["affair"].value;
-        let message = form.elements["message"].value;
-        console.log(affair);
-        console.log(message);
-        window.location.replace("/Teachers/Index");
-    }
     if (event.target.dataset.cancelteacher) {
         window.location.replace("/Teachers/Index");
     }
@@ -60,8 +53,10 @@ document.addEventListener("submit", async function (event) {
     let form = event.target;
 
     if (event.target.dataset.login) {
-        if (form.elements["correo"].value) { 
-            if (form.elements["contraseña"].value) {
+        let email = form.elements["correo"];
+        let password = form.elements["contraseña"];
+        if (email.value) {
+            if (password.value) {
                 let jsonLogin = Object.fromEntries(new FormData(form));
                 const requestInfo = {
                     method: "POST",
@@ -122,8 +117,61 @@ document.addEventListener("submit", async function (event) {
         else {
             email.setCustomValidity('Proporcione su correo electronico');
             email.reportValidity();
-        }
-       
+        }     
     }
+
+    if (event.target.dataset.sendmessage) {
+        let affair = form.elements["affair"];
+        let message = form.elements["message"];
+        let recipients = "";
+        if (affair.value) {
+            if (message.value) {
+                let today = new Date();
+                today = `${today.getFullYear()}-${parseInt(today.getMonth()) + 1 < 9 ? "0" + parseInt(today.getMonth()) + 1 : parseInt(today.getMonth()) + 1}-${today.getDate() < 10 ? "0" + today.getDate() : today.getDate()}`;
+                let jsonMensaje = {
+                    asunto: affair.value,
+                    mensajeEnviado: message.value,
+                    destinatarios: recipients,
+                    fkIdDocente: localStorage.idUser,
+                    fechaEnvio: today
+                };
+                const requestInfo = {
+                    method: "POST",
+                    body: JSON.stringify(jsonMensaje),
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': '*'
+                    }
+                };
+                let response = await fetch(`${localStorage.url}${form.dataset.action}`, requestInfo);
+                if (response.ok) {
+                    form.reset();
+                    window.location.replace("/Teachers/Index");
+                }
+                //Sino el status no es ok
+                else {
+                    console.log(response);
+                    console.log(response.body);
+                    console.log(response.status);
+                    console.log(response.statusText);
+                }
+
+            }
+            else {
+                message.setCustomValidity('Proporcione el mensaje a enviar');
+                message.reportValidity();
+            }
+        }
+        else {
+            affair.setCustomValidity('Proporcione el asunto del mensaje');
+            affair.reportValidity();
+        }
+    }
+
+
+
 
 });

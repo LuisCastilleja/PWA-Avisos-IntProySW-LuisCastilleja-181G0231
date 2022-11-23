@@ -22,17 +22,22 @@ namespace MensajesAPI.Controllers
         Repository<Docente> repositoryDocente;
         Repository<DocenteEspecialidad> repositoryDocente_Especialidad;
         Repository<DocenteGrupo> repositoryDocente_Grupo;
+        Repository<AlumnoMensaje> repositoryAlumno_Mensaje;
+        Repository<GrupoMensaje> repositoryGrupo_Mensaje;
+        Repository<EspecialidadMensaje> repositoryEspecialidad_Mensaje;
+        Repository<AlumnoDocente> repositoryAlumno_Docente;
         List<Mensaje> listaMensajes = new List<Mensaje>();
         List<DocenteGrupo> listaDocente_Grupo = new List<DocenteGrupo>();
         List<DocenteEspecialidad> listaDocente_Especialidad = new List<DocenteEspecialidad>();
         List<Especialidad> listaTablaEspecialidad = new List<Especialidad>();
         List<Grupo> listaTablaGrupos = new List<Grupo>();
+        List<Alumno> listaTablaAlumnos = new List<Alumno>();
+        List<AlumnoDocente> listaAlumno_Docente = new List<AlumnoDocente>();
         List<Especialidad> listaEspecialidades = new List<Especialidad>();
         List<Grupo> listaGrupos = new List<Grupo>();
+        List<Alumno> listaAlumnos = new List<Alumno>();
         Mensaje detallesMesajeVacio = new Mensaje();
-        Repository<AlumnoMensaje> repositoryAlumno_Mensaje;
-        Repository<GrupoMensaje> repositoryGrupo_Mensaje;
-        Repository<EspecialidadMensaje> repositoryEspecialidad_Mensaje;
+        
 
         public DocenteController(itesrcne_pwa_mensajes_181g0231_bdContext context, IConfiguration configuration)
         {
@@ -48,7 +53,7 @@ namespace MensajesAPI.Controllers
             repositoryGrupo_Mensaje = new Repository<GrupoMensaje>(Context);
             repositoryEspecialidad_Mensaje = new Repository<EspecialidadMensaje>(Context);
             repositoryAlumno = new Repository<Alumno>(Context);
-            
+            repositoryAlumno_Docente = new Repository<AlumnoDocente>(Context);         
         }
 
         [HttpGet("DetallesMensaje/{id}")]
@@ -152,6 +157,36 @@ namespace MensajesAPI.Controllers
             else
             {
                 return listaGrupos;
+            }
+        }
+
+
+        [HttpGet("Alumnos/{id}")]
+        public IEnumerable<Alumno> GetAlumnosByProffesorId(int id)
+        {
+            if (id > 0)
+            {
+                    listaAlumno_Docente = repositoryAlumno_Docente.GetAll().Where(x => x.FkIdDocente == id).ToList();
+                    listaTablaAlumnos = repositoryAlumno.GetAll().ToList();        
+                
+                if (listaAlumno_Docente != null && listaTablaAlumnos != null)
+                {
+                    foreach (var alumno_docente in listaAlumno_Docente)
+                    {
+                        foreach (var alumno in listaTablaAlumnos)
+                        {
+                            if (alumno_docente.FkIdAlumno == alumno.Id)
+                            {
+                                listaAlumnos.Add(alumno);
+                            }
+                        }
+                    }
+                }
+                return listaAlumnos;
+            }
+            else
+            {
+                return listaAlumnos;
             }
         }
 

@@ -14,7 +14,7 @@
             <h1>Agregar mensaje</h1>
         </header>
         <main>
-            <form method="post">
+        <form method="post" data-sendmessage="post" data-action="Docente">
             <div class="divFlex">
             <div>
                 <label>Para:</label>
@@ -52,8 +52,8 @@
             </div>
         
             </div>
-       <div class="divButtons">
-            <a data-sendmessage="sendMessage" class="aSend">Enviar mensaje &#9993;</a>
+       <div class="divButtons">               
+           <input data-sendmessage="sendMessage" type="submit" class="aSend" value="Enviar mensaje &#9993;" />
             <a data-cancelteacher="cancelTeacher" class="aBack">Cancelar &#10060;</a>
        </div>
         </form>
