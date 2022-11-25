@@ -70,7 +70,6 @@ function filterSelect(list, typeOfFilter) {
         if (typeOfFilter == "Estudiantes") {
             list.forEach(value => {
                 let option = document.createElement("option");
-                option.id = value.id;
                 option.innerText = value.nombreCompleto;
                 select.appendChild(option);
             });
@@ -78,7 +77,6 @@ function filterSelect(list, typeOfFilter) {
         else if (typeOfFilter == "Grupos") {
             list.forEach(value => {
                 let option = document.createElement("option");
-                option.id = value.id;
                 option.innerText = value.nombre;
                 select.appendChild(option);
             });
@@ -86,7 +84,6 @@ function filterSelect(list, typeOfFilter) {
         else {
             list.forEach(value => {
                 let option = document.createElement("option");
-                option.id = value.id;
                 option.innerText = value.nombre;
                 select.appendChild(option);
             });
@@ -106,7 +103,6 @@ function fillFilters() {
 
 //Cuando de click a una opcion del select de agregar destinatarios
 select.addEventListener("click", function (event) {
-    console.log(event);
     let optionSelected = event.target;
     recipient.value = optionSelected.innerText;
 });

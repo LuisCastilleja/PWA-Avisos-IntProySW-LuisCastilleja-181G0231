@@ -1,4 +1,6 @@
 ﻿localStorage.url = "https://pwa-mensajes-181g0231.itesrc.net/api/";
+let label = document.getElementById("errorMessage");
+let selectRecipients = document.querySelector(".listOfRecipients");
 
 document.addEventListener("click", function (event) {
     
@@ -6,7 +8,13 @@ document.addEventListener("click", function (event) {
         window.location.replace("/Teachers/AddMessage");
     }
     if (event.target.dataset.update) {
-        window.location.replace("/Teachers/UpdateMessage");
+        if (localStorage.idMessage != "") {
+            window.location.replace("/Teachers/UpdateMessage");
+        }
+        else {
+            //Decir que seleccione un mensaje para ver los detalles en un label, luego quito el Alert
+            alert("Seleccione un mensaje para editar su informacion");
+        }
     }
     if (event.target.dataset.delete) {
         alert("Pendiente crear un modal para eliminar");
@@ -24,13 +32,6 @@ document.addEventListener("click", function (event) {
         window.location.replace("/Home/Login");
     }
     if (event.target.dataset.cancelteacher) {
-        window.location.replace("/Teachers/Index");
-    }
-    if (event.target.dataset.updatemessage) {
-        let affair = form.elements["affair"].value;
-        let message = form.elements["message"].value;
-        console.log(affair);
-        console.log(message);
         window.location.replace("/Teachers/Index");
     }
     if (event.target.dataset.cancelstudent) {
@@ -124,17 +125,40 @@ document.addEventListener("submit", async function (event) {
         let affair = form.elements["affair"];
         let message = form.elements["message"];
         let recipients = "";
+
+        if (selectRecipients) {
+            //Recorrer el select que tiene los destintarios
+            for (let x of selectRecipients.options) {
+                //Para ver si estamos recorriendo el ultimo option de la lista de options que tiene el select
+                if (x.value == selectRecipients.options[selectRecipients.options.length - 1].value) {
+                    //Si era el ultimo option no agregamos la coma
+                    recipients = recipients + x.value;
+                }
+                else {
+                    //Si aun no es el ultimo option agregamos la coma
+                    recipients = recipients + x.value + ",";
+                }
+            }
+        }
         if (affair.value) {
             if (message.value) {
                 let today = new Date();
                 today = `${today.getFullYear()}-${parseInt(today.getMonth()) + 1 < 9 ? "0" + parseInt(today.getMonth()) + 1 : parseInt(today.getMonth()) + 1}-${today.getDate() < 10 ? "0" + today.getDate() : today.getDate()}`;
-                let jsonMensaje = {
+                let jsonMensaje = form.dataset.update ? {
+                    id: localStorage.idMessage,
                     asunto: affair.value,
                     mensajeEnviado: message.value,
                     destinatarios: recipients,
                     fkIdDocente: localStorage.idUser,
                     fechaEnvio: today
-                };
+                } :
+                    {
+                        asunto: affair.value,
+                        mensajeEnviado: message.value,
+                        destinatarios: recipients,
+                        fkIdDocente: localStorage.idUser,
+                        fechaEnvio: today
+                    };
                 const requestInfo = {
                     method: "POST",
                     body: JSON.stringify(jsonMensaje),
@@ -148,14 +172,17 @@ document.addEventListener("submit", async function (event) {
                 };
                 let response = await fetch(`${localStorage.url}${form.dataset.action}`, requestInfo);
                 if (response.ok) {
+                    localStorage.idMessage = "";
+                    label.innerText = "";
                     form.reset();
                     window.location.replace("/Teachers/Index");
                 }
-                //Sino el status no es ok
+                else if (response.status == 400) {
+                    //Leer el mensaje 
+                    let error = await response.text();
+                    label.innerText = error;
+                }
                 else {
-                    console.log(response);
-                    console.log(response.body);
-                    console.log(response.status);
                     console.log(response.statusText);
                 }
 

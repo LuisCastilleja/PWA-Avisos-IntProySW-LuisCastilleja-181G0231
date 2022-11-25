@@ -1,56 +1,69 @@
-﻿var listOfStudents = [
-    {
-        NombreCompleto: "Luis Enrique Castilleja Tristán",
-        Correo: "181G0231@rcarbonifera.tecnm.mx",
-    },
-    {
-        NombreCompleto: "Karla Veronica Lopez Tovar",
-        Correo: "181G0138@rcarbonifera.tecnm.mx"
-    },
-    {
-        NombreCompleto: "Abraham Antonio Torres Martinez",
-        Correo: "181G0531@rcarbonifera.tecnm.mx"
-    }
-];
-var listOfGroups = [
-    {
-        Grupo: "8.2G",
-        ListaEstudiantes: [listOfStudents],
-    },
-    {
-        Grupo: "9.1G",
-        ListaEstudiantes: [listOfStudents],
-    },
-    {
-        Grupo: "7.1G",
-        ListaEstudiantes: [listOfStudents],
-    }
-];
-var listOfSpecialties = [
-    {
-        Especialidad: "Ing. Sistemas computacionales",
-        ListaGrupos: listOfGroups,
-    },
-    {
-        Especialidad: "Ing. Mecatronica",
-        ListaGrupos: listOfGroups,
-    },
-    {
-        Especialidad: "Ing. Petrolera",
-        ListaGrupos: listOfGroups,
-    }
-];
-
-//Elementos
-let recipient = document.querySelector("input[type=text]");
+﻿let recipient = document.querySelector("input[type=text]");
 let inputFilter = document.querySelector(".inputFilter");
 let select = document.querySelector("select");
 let selectFilter = document.querySelector(".selectFilter")
 let addButton = document.querySelector("input[type=button]");
 let removeInput = document.querySelector(".removeInput");
 let removeButton = document.querySelector(".removeButton");
-let listOfRecipients = document.querySelector(".listOfRecipients");
+let selectOfRecipients = document.querySelector(".listOfRecipients");
 let form = document.querySelector("form");
+
+let listOfStudents = [];
+let listOfGroups = [];
+let listOfSpecialties = [];
+
+async function getMessageById() {
+    let response = await fetch(localStorage.url + "Docente/DetallesMensaje/" + localStorage.idMessage);
+    if (response.ok) {
+        let jsonMessage = await response.json();
+        form.elements["affair"].value = jsonMessage.asunto;
+        form.elements["message"].value = jsonMessage.mensajeEnviado;
+        let listOfRecipients = jsonMessage.destinatarios.split(',');
+        listOfRecipients.forEach(value => {
+            let option = document.createElement("option");
+            option.innerText = value;
+            selectOfRecipients.appendChild(option);
+        });
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
+async function getStudents() {
+    let response = await fetch(localStorage.url + "Docente/Alumnos/" + localStorage.idUser);
+    if (response.ok) {
+        listOfStudents = await response.json();
+        //Para dejar uno por defecto
+        filterSelect(listOfStudents, "Estudiantes");
+        inputFilter.value = "Estudiantes";
+        selectFilter.options[0].selected = true;
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
+async function getGroups() {
+    let response = await fetch(localStorage.url + "Docente/Grupos/" + localStorage.idUser);
+    if (response.ok) {
+        listOfGroups = await response.json();
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
+async function getSpecialties() {
+    let response = await fetch(localStorage.url + "Docente/Especialidades/" + localStorage.idUser);
+    if (response.ok) {
+        listOfSpecialties = await response.json();
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
 
 //Agregar destinatarios
 function addRecipients() {
@@ -58,14 +71,14 @@ function addRecipients() {
         let option = document.createElement("option");
         option.innerText = recipient.value;
         recipient.value = "";
-        listOfRecipients.appendChild(option);
+        selectOfRecipients.appendChild(option);
     }
 }
 
 //Para remover un destinitario.
 function removeRecipients() {
     if (removeInput.value) {
-        listOfRecipients.options.remove(listOfRecipients.selectedIndex);
+        selectOfRecipients.options.remove(selectOfRecipients.selectedIndex);
         removeInput.value = "";
     }
 }
@@ -75,21 +88,21 @@ function filterSelect(list, typeOfFilter) {
     if (typeOfFilter == "Estudiantes") {
         list.forEach(value => {
             let option = document.createElement("option");
-            option.innerText = value.NombreCompleto;
+            option.innerText = value.nombreCompleto;
             select.appendChild(option);
         });
     }
     else if (typeOfFilter == "Grupos") {
         list.forEach(value => {
             let option = document.createElement("option");
-            option.innerText = value.Grupo;
+                option.innerText = value.nombre;
             select.appendChild(option);
         });
     }
     else {
         list.forEach(value => {
             let option = document.createElement("option");
-            option.innerText = value.Especialidad;
+            option.innerText = value.nombre;
             select.appendChild(option);
         });
     }
@@ -106,13 +119,6 @@ function fillFilters() {
     selectFilter.append(option1, option2, option3);
 }
 
-//Rellenar los filtros
-fillFilters();
-//Tener por defecto un listado y un filtro seleccionado
-filterSelect(listOfStudents, "Estudiantes");
-inputFilter.value = "Estudiantes";
-selectFilter.options[0].selected = true;
-
 //Cuando de click a una opcion del select de agregar destinatarios
 select.addEventListener("click", function (event) {
     console.log(event);
@@ -121,7 +127,7 @@ select.addEventListener("click", function (event) {
 });
 
 //Cuando de click a una opcion del select de eliminar destinatarios.
-listOfRecipients.addEventListener("click", function (event) {
+selectOfRecipients.addEventListener("click", function (event) {
     let optionSelected = event.target;
     removeInput.value = optionSelected.innerText;
 });
@@ -162,3 +168,12 @@ addButton.addEventListener("click", function () {
 removeButton.addEventListener("click", function () {
     removeRecipients();
 });
+
+getStudents();
+getGroups();
+getSpecialties();
+getMessageById();
+
+//Rellenar los filtros
+fillFilters();
+//Tener por defecto un listado y un filtro seleccionado

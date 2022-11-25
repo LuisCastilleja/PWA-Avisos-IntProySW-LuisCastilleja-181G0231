@@ -14,7 +14,7 @@
             <h1>Editar mensaje</h1>
         </header>
         <main>
-            <form>
+        <form method="post" data-sendmessage="post" data-action="Docente/EditarMensaje" data-update="update">
             <div class="divFlex">
             <div>
                 <label>Para:</label>
@@ -53,10 +53,11 @@
         
             </div>
        <div class="divButtons">
-            <a data-updatemessage="updateMessage" class="aSend">Guardar mensaje &#128190</a>
+                <input data-sendmessage="sendMessage" type="submit" class="aSend" value="Guardar mensaje &#9993;" />
                 <a data-cancelteacher="cancelTeacher" class="aBack">Cancelar &#10060;</a>
        </div>
         </form>
+        <label id="errorMessage"></label>
         </main>
         <footer></footer>
     <script type="text/javascript">

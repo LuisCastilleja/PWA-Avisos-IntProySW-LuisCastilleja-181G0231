@@ -279,7 +279,7 @@ namespace MensajesAPI.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost("EditarMensaje")]
         public IActionResult Put([FromBody] Mensaje mensaje)
         {
             if (mensaje == null)

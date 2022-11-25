@@ -125,9 +125,16 @@ main .divButtons {
         padding-left: 42px;
 }
 
-main .divButtons input {
-            width: 200px;
-            height: 27px;
+main .divButtons input[type=submit] {
+        padding-top: 5px;
+        display: inline-block;
+        background-color: #1BAB6F;
+        color: white;
+        border: 0px;
+        height: 27px;
+        width: 160px;
+        font-size: 0.8em;
+        text-align: center;
 }
 
 main select option {
