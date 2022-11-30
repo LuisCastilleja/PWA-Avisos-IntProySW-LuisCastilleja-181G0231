@@ -473,24 +473,24 @@ namespace MensajesAPI.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost("EliminarMensaje")]
+        public IActionResult Delete([FromBody]Mensaje mensaje)
         {
-            if (id <= 0)
+            if (mensaje ==null)
             {
                 return BadRequest();
             }
             else
             {
-                var mensajeEliminar = repositoryMensaje.GetById(id);
+                var mensajeEliminar = repositoryMensaje.GetById(mensaje.Id);
                 if (mensajeEliminar != null)
                 {
                     //Buscamos en la tabla especialidad_mensaje el mensaje que se eliminara por el id del mensaje
-                    var listaEliminarEspecialidad_mensajeEliminar = repositoryEspecialidad_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+                    var listaEliminarEspecialidad_mensajeEliminar = repositoryEspecialidad_Mensaje.GetAll().Where(x => x.FkIdMensaje == mensajeEliminar.Id).ToList();
                     //Buscamos en la tabla alumno_mensaje el mensaje que se eliminara por el id del mensaje
-                    var listaEliminarAlumno_mensaje = repositoryAlumno_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+                    var listaEliminarAlumno_mensaje = repositoryAlumno_Mensaje.GetAll().Where(x => x.FkIdMensaje == mensajeEliminar.Id).ToList();
                     //Buscamos en la tabla grupo_mensaje el mensaje que se eliminara por el id del mensaje
-                    var listaEliminarGrupo_mensaje = repositoryGrupo_Mensaje.GetAll().Where(x => x.FkIdMensaje == id).ToList();
+                    var listaEliminarGrupo_mensaje = repositoryGrupo_Mensaje.GetAll().Where(x => x.FkIdMensaje == mensajeEliminar.Id).ToList();
 
                     //Si hay mensajes en la tabla especialidad_mensaje por eliminar
                     if(listaEliminarEspecialidad_mensajeEliminar != null)

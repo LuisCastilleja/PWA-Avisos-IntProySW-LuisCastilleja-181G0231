@@ -10,7 +10,7 @@ async function getMessageById() {
         pAffair.innerText = jsonMessage.asunto;
         p.innerText = jsonMessage.mensajeEnviado;
         let fecha = new Date(jsonMessage.fechaEnvio).toLocaleDateString();
-        dateLabel.innerText = fecha;
+        dateLabel.innerText ="Fecha de envío: " + fecha;
     }
     else {
         console.log(response.status);

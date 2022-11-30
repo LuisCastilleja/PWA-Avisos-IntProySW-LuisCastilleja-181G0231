@@ -9,7 +9,7 @@ function generateList(listMessages) {
         option.id = listMessages[i].id;
         let fecha = new Date(listMessages[i].fechaEnvio).toLocaleDateString();
         h1.innerText = "Bienvenido(a)" + " " + localStorage.nameUser;
-        option.innerHTML = listMessages[i].asunto + " " + "(" + "Fecha de envio:" + fecha + ")";
+        option.innerText = listMessages[i].asunto + " " + "(" + "Fecha de envio:" + fecha + ")";
         select.appendChild(option);
     }
 }

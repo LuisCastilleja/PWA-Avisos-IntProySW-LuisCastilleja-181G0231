@@ -19,12 +19,17 @@ header h1 {
     text-align: center;
     padding-top: 10px;
     color: black;
-    font-weight:300;
+    font-weight:700;
+}
+main {
+    margin-left:30px;
+    width:95%;
 }
 main .divFlex {
+    margin:0px auto;
     flex-wrap:wrap;
     display: flex;
-    width: 70%;
+    width: 100%;
     height: 20%;
     text-align: justify;
     overflow-y: scroll;
@@ -37,17 +42,17 @@ main .divFlex label {
         font-size:x-large;
 }
 main .divFlex p {
-    margin:0px;
+        margin:0px;
         display: inline-block;
-        padding: 0px 5px 0px 5px;
+        padding: 12px 5px 0px 5px;
         font-size:medium;
+        width:85%;
 }
 main .divFlexMessage {
-    gap:0px;
     flex-wrap:wrap;
     display: flex;
     text-align: justify;
-    width: 70%;
+    width: 100%;
     height: 40%;
     overflow-y: scroll;
     border: 2px double #1BAB6F;
@@ -56,15 +61,16 @@ main .divFlexMessage label {
     font-size:x-large;
         display: inline-block;
         font-weight: 700;
-        margin:5px 0px 0px 5px;
+        margin:5px;
         padding:0px;
         
 }
 main .divFlexMessage p {
         margin: 0px;
         display: inline-block;
-        padding: 5px 5px 0px 5px;
+        padding: 12px 5px 0px 5px;
         font-size:medium;
+        width:85%;
 }
 main .dateLabel{
     text-align:right;
@@ -75,7 +81,7 @@ main .dateLabel{
 }
 main .divDate{
     text-align:right;
-    width:70%;
+    width:100%;
 }
 main a {
     margin-bottom:10px;

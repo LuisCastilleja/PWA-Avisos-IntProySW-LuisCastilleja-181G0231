@@ -1,8 +1,9 @@
 ﻿localStorage.url = "https://pwa-mensajes-181g0231.itesrc.net/api/";
 let label = document.getElementById("errorMessage");
 let selectRecipients = document.querySelector(".listOfRecipients");
+let jsonMessageDelete = [];
 
-document.addEventListener("click", function (event) {
+document.addEventListener("click", async function (event) {
     
     if (event.target.dataset.add) {
         window.location.replace("/Teachers/AddMessage");
@@ -17,7 +18,45 @@ document.addEventListener("click", function (event) {
         }
     }
     if (event.target.dataset.delete) {
-        alert("Pendiente crear un modal para eliminar");
+        //Para traernos el modal
+        let modal = document.getElementById(event.target.dataset.modal);
+        //Traernos el formulario del modal
+        let form = modal.querySelector("form");
+        //Traernos la informacion mas reciente desde la API del mensaje
+        if (localStorage.idMessage != "") {
+            let response = await fetch(localStorage.url + "Docente/DetallesMensaje/" + localStorage.idMessage);
+            if (response.ok) {
+                //Nos traemos el mensaje con la informacion
+                jsonMessageDelete = await response.json();
+                let affairLabel = form.querySelector("label[name=affair]");
+                let messageLabel = form.querySelector("label[name=message]");
+                let dateLabel = form.querySelector("label[name=dateLabel]");
+                //Rellenamos el formulario con la informacion
+                affairLabel.innerText = jsonMessageDelete.asunto;
+                messageLabel.innerText = jsonMessageDelete.mensajeEnviado;
+                //Convertimos la fecha
+                let date = new Date(jsonMessageDelete.fechaEnvio).toLocaleDateString();
+                dateLabel.innerText = "Fecha de envío: "+ date;
+                //Asignamos la fecha al label
+          //      form.elements["dateLabel"].innerText = date;
+                //Como la lista de destinatario es un string hay que hacerla un arreglo para para asignarla al select
+                let listOfRecipients = jsonMessageDelete.destinatarios.split(',');
+                listOfRecipients.forEach(value => {
+                    let option = document.createElement("option");
+                    option.innerText = value;
+                    selectRecipients.appendChild(option);
+                });
+            }
+            else {
+                console.log(response.statusText);
+            }
+        }
+        else {
+                //Decir que seleccione un mensaje para elimnarlo
+                alert("Seleccione un mensaje a eliminar");          
+        }
+        modal.style.display = "block";
+        return;
     }
     if (event.target.dataset.details) {
         if (localStorage.idMessage != "") {
@@ -46,6 +85,11 @@ document.addEventListener("click", function (event) {
             alert("Seleccione un mensaje para ver sus detalles");
         }
     }
+    if (event.target.dataset.cancelupdate) {
+        event.target.closest(".modal").style.display = "none";
+        selectRecipients.replaceChildren();
+        jsonMessageDelete = [];
+    }
 });
 
 document.addEventListener("submit", async function (event) {
@@ -53,9 +97,14 @@ document.addEventListener("submit", async function (event) {
     event.preventDefault();
     let form = event.target;
 
+    //Si quiere iniciar sesion
     if (event.target.dataset.login) {
         let email = form.elements["correo"];
+        let errorLabel = form.querySelector(".errorLabel");
         let password = form.elements["contraseña"];
+        let input = form.querySelector("input[type=submit]");
+        input.disabled = true;
+        input.style.opacity = 0.6;
         if (email.value) {
             if (password.value) {
                 let jsonLogin = Object.fromEntries(new FormData(form));
@@ -100,14 +149,18 @@ document.addEventListener("submit", async function (event) {
                     else {
                         window.location.replace("/Students/Index");
                     }
+                    input.disabled = false;
                     form.reset();
                 }
                 //Sino el status no es ok
                 else {
-                    console.log(response);
-                    console.log(response.body);
-                    console.log(response.status);
-                    console.log(response.statusText);
+                    input.disabled = false;
+                    input.style.opacity = 1;
+                    //Traernos el error
+                    let text = await response.text();
+                    errorLabel.innerText = text;
+                    errorLabel.style.color = "red";
+                    errorLabel.style.display = "block";
                 }
             }
             else {
@@ -121,6 +174,7 @@ document.addEventListener("submit", async function (event) {
         }     
     }
 
+    //SI quiere agregar o editar
     if (event.target.dataset.sendmessage) {
         let affair = form.elements["affair"];
         let message = form.elements["message"];
@@ -144,6 +198,7 @@ document.addEventListener("submit", async function (event) {
             if (message.value) {
                 let today = new Date();
                 today = `${today.getFullYear()}-${parseInt(today.getMonth()) + 1 < 9 ? "0" + parseInt(today.getMonth()) + 1 : parseInt(today.getMonth()) + 1}-${today.getDate() < 10 ? "0" + today.getDate() : today.getDate()}`;
+                //Si va a editar
                 let jsonMensaje = form.dataset.update ? {
                     id: localStorage.idMessage,
                     asunto: affair.value,
@@ -152,7 +207,8 @@ document.addEventListener("submit", async function (event) {
                     fkIdDocente: localStorage.idUser,
                     fechaEnvio: today
                 } :
-                    {
+                        {
+                        //si va a agregar
                         asunto: affair.value,
                         mensajeEnviado: message.value,
                         destinatarios: recipients,
@@ -196,6 +252,35 @@ document.addEventListener("submit", async function (event) {
             affair.setCustomValidity('Proporcione el asunto del mensaje');
             affair.reportValidity();
         }
+    }
+
+    //Si quiere eliminar
+    if (event.target.dataset.delete) {
+
+        if (jsonMessageDelete) {
+            const requestInfo = {
+                method: "POST",
+                body: JSON.stringify(jsonMessageDelete),
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': '*'
+                }
+            };
+            let response = await fetch(`${localStorage.url}${form.dataset.action}`, requestInfo);
+            if (response.ok) {
+                localStorage.idMessage = "";
+                event.target.closest(".modal").style.display = "none";
+                selectRecipients.replaceChildren();
+                jsonMessageDelete = [];
+                form.reset();
+            }
+            else {
+                console.log(response.statusText);
+            }
+        }            
     }
 
 

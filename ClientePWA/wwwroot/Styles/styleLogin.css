@@ -83,6 +83,13 @@ main .divPassword input {
         font-size: large;
         background-color: transparent;
 }
+main .errorLabel {
+        grid-column: 1/ span 3;
+        grid-row: 3/4;
+        width: 100%;
+        font-size: large;
+        text-align: center;
+}
 main .divGrid input[type=submit] {
     align-self:end;
     grid-column: 1/ span 3;
@@ -96,4 +103,9 @@ main .divGrid input[type=submit] {
     padding-bottom: 3px;
     text-align: center;
     text-decoration:none;
+}
+
+@media screen and (max-width: 560px) and (max-height:940px){
+    main form{
+    }
 }

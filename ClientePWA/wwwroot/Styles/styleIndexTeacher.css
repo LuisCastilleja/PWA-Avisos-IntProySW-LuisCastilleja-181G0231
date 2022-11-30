@@ -61,3 +61,100 @@ main a {
     text-align: center;
     border:0px;
 }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background: #00000050;
+    display: none;
+}
+
+.modal div {
+        width: 400px;
+        height: auto;
+        margin: 30px auto;
+        border: 1px solid black;
+        padding: 20px;
+        background: #E8E5C9;
+}
+.modal form{
+    width:100%;
+}
+.modal .buttonsModalFlex {
+        border:0px;
+        width:95%;
+        height:30px;
+        margin:0px;
+        display: flex;
+        flex-wrap: wrap;
+}
+
+.modal form input[type=submit] {
+        padding-top: 3px;
+        margin-top: 5px;
+        margin-left: 10px;
+        display: inline-block;
+        background-color: #1BAB6F;
+        height: 30px;
+        width: 40%;
+        font-size: medium;
+        color: white;
+        padding-bottom: 3px;
+        text-align: center;
+        border: 0px;
+}
+.modal form a {
+        padding-top: 3px;
+        margin-top: 5px;
+        margin-left: 10px;
+        display: inline-block;
+        background-color: #1BAB6F;
+        height: 22px;
+        width: 40%;
+        font-size: medium;
+        color: white;
+        padding-bottom: 3px;
+        text-align: center;
+        border: 0px;
+    }
+.modal select{
+    margin-top:5px;
+    height:30%;
+}
+main label[name=dateLabel] {
+    font-size: medium;
+    text-align: right;
+    display: block;
+    padding: 3px;
+    margin-top: 2px;
+    width: 100%;
+}
+main .labelDelete {
+    font-size: x-large;
+    text-align: center;
+    display: block;
+    padding: 3px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+main label[name=affair] {
+    font-size: medium;
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    overflow-y: scroll;
+    height: 11%;
+    width: 100%;
+}
+main label[name=message] {
+    font-size: medium;
+    overflow-y: scroll;
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    height: 11%;
+    width: 100%;
+}

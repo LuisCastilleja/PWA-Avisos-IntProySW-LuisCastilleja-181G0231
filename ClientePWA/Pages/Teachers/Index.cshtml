@@ -3,33 +3,57 @@
 @{
 }
 <html>
-    <head>
-        <title>Lista de mensajes</title>
+<head>
+    <title>Lista de mensajes</title>
     <link type="text/css" href="~/Styles/styleIndexTeacher.css" rel="stylesheet" />
     <link href="~/manifest.json" rel="manifest" />
     <meta name"viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <body>
-        <header>
-            <h1></h1>
-        </header>
-        <main>
-            <select size="10" class="select">
-            </select>
-            <center>
-        <a  data-details="details">Ver detalles &#128269;</a>
-        <a  data-add="add">Agregar mensaje &#10133;</a>
-        <a data-update="update">Editar mensaje &#10133;</a>
-        <a data-delete="delete">Eliminar mensaje &#10133;</a>
-        <a  data-logout ="logout">Cerrar sesión &#128228;</a>
+</head>
+<body>
+    <header>
+        <h1></h1>
+    </header>
+    <main>
+        <select size="10" class="select">
+        </select>
+        <center>
+            <a data-details="details">Ver detalles &#128269;</a>
+            <a data-add="add">Agregar mensaje &#10133;</a>
+            <a data-update="update">Editar mensaje &#10133;</a>
+            <a data-delete="delete" data-modal="deleteModal">Eliminar mensaje &#10133;</a>
+            <a data-logout="logout">Cerrar sesión &#128228;</a>
         </center>
-        </main>
+        <div class="modal" id="deleteModal">
+            <div>
+                <form method="post" data-action="Docente/EliminarMensaje" data-delete="delete">
+                    <label class="labelDelete">¿Desea eliminar este mensaje?</label>
+                    <br />
+                    <label>Destinatario(s):</label>
+                    <br />
+                    <select size="5" class="listOfRecipients"></select>
+                    <br />
+                    <label>Asunto:</label>
+                    <label name="affair" type="text"></label>
+                    <br />
+                    <label class="labelMessage">Mensaje:</label>
+                    <label name="message"></label>
+                    <br/>
+                    <label name="dateLabel"></label>
+                    <label  hidden class="errorLabel"></label>
+                    <div class="buttonsModalFlex">
+                        <input type="submit" value="Eliminar &#128465;" step="0.5" />
+                        <a data-cancelupdate="cancelDelete">Cancelar &#10060;</a>
+                    </div>              
+                </form>              
+            </div>
+        </div>
+    </main>
     <script type="text/javascript">
         if (navigator.serviceWorker) {
             //Registranos al service worker
             navigator.serviceWorker.register("/ServiceWorkerJS.js");
             //Aqui recibo los mensajes de actualizacion de datos.
-            navigator.serviceWorker.addEventListener("message", function(event){
+            navigator.serviceWorker.addEventListener("message", function (event) {
                 if (event.data.url.includes(url + "/docente/")) {
                     generateList(event.data.data);
                 }
@@ -38,5 +62,5 @@
     </script>
     <script type="text/javascript" src="~/Scripts/IndexTeacherJS.js"></script>
     <script type="text/javascript" src="~/Scripts/ClickAndSubmitJS.js"></script>
-    </body>
+</body>
 </html>

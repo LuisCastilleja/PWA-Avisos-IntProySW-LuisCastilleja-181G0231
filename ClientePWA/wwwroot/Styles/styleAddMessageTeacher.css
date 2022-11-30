@@ -61,7 +61,7 @@ main .divButtons a {
     background-color: #1BAB6F;
     color:white;
     border:0px;
-    height:27px;
+    height:24px;
     width:160px;
     font-size:0.8em;
     margin-left:10px;
@@ -112,12 +112,13 @@ main .divButtons {
     padding-left:42px;
 }
  main .divButtons input[type=submit] {
-        padding-top: 5px;
+        margin:0px;
+        padding:0px;
         display: inline-block;
         background-color: #1BAB6F;
         color: white;
         border: 0px;
-        height: 27px;
+        height: 28px;
         width: 160px;
         font-size: 0.8em;
         text-align: center;
