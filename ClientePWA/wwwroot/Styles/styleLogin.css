@@ -104,8 +104,3 @@ main .divGrid input[type=submit] {
     text-align: center;
     text-decoration:none;
 }
-
-@media screen and (max-width: 560px) and (max-height:940px){
-    main form{
-    }
-}

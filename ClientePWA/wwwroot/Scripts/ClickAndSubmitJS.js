@@ -197,7 +197,7 @@ document.addEventListener("submit", async function (event) {
         if (affair.value) {
             if (message.value) {
                 let today = new Date();
-                today = `${today.getFullYear()}-${parseInt(today.getMonth()) + 1 < 9 ? "0" + parseInt(today.getMonth()) + 1 : parseInt(today.getMonth()) + 1}-${today.getDate() < 10 ? "0" + today.getDate() : today.getDate()}`;
+                today = `${today.getFullYear()}-${parseInt(today.getMonth()) + 1 < 9 ? "0" + (parseInt(today.getMonth()) + 1) : parseInt(today.getMonth()) + 1}-${today.getDate() < 10 ? "0" + today.getDate() : today.getDate()}`;
                 //Si va a editar
                 let jsonMensaje = form.dataset.update ? {
                     id: localStorage.idMessage,
