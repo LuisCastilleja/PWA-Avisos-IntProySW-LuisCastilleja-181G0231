@@ -243,3 +243,5 @@ async function revalidate(request, clientId) {
 function saveRequest(request) {
     console.log(request);
 }
+
+//QUEDO PENDIENTE EL CACHE Y LO DE INDEXED DB ME DABA ERROR EN EL METODO DE RESPONDWITH, DECIA QUE NO DEVOLVIA UN RESPUESTA.
