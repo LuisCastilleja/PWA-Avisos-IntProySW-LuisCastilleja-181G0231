@@ -243,5 +243,15 @@ async function revalidate(request, clientId) {
 function saveRequest(request) {
     console.log(request);
 }
+//CREDENCIALES PARA INICIAR SESIÓN.
+
+//    Docente(El que envía mensajes) 
+//Correo: 2609@rcarbonifera.tecnm.mx
+//Contraseña: Hector123
+
+//Alumno(El que recibe mensajes) 
+//Correo: 181G0231 @rcarbonifera.tecnm.mx
+//Contraseña: Luis123
+
 
 //QUEDO PENDIENTE EL CACHE Y LO DE INDEXED DB ME DABA ERROR EN EL METODO DE RESPONDWITH, DECIA QUE NO DEVOLVIA UN RESPUESTA.
