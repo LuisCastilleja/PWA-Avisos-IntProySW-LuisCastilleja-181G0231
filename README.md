@@ -1,3 +1,5 @@
+CREDENCIALES PARA INICIAR SESIÓN. 
+
 Docente (El que envía mensajes)
 Correo: 2609@rcarbonifera.tecnm.mx
 Contraseña: Hector123
